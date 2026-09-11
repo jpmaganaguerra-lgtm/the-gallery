@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE GALLERY — Stay in the middle of everything</title>
+<meta name="description" content="A design-forward stay in the heart of Condesa. Apartments, a café downstairs, bikes, and a neighborhood you actually get to live in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-chapter="stay">
+
+<header class="site" id="siteHeader">
+  <a href="#top" class="logotype">The Gallery</a>
+  <nav class="chapters" id="chapterNav">
+    <a href="#stay" data-target="stay">Stay</a>
+    <a href="#house" data-target="house">The House</a>
+    <a href="#condesa" data-target="condesa">Condesa</a>
+    <a href="#vibe" data-target="vibe">The Vibe</a>
+  </nav>
+  <a href="#book" class="cta-book">Check availability</a>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" style="padding-top:96px;">
+    <div class="hero-media" id="heroMedia">
+      <picture>
+        <source
+          srcset="assets/img/hero/hero-courtyard-900.webp 900w,
+                  assets/img/hero/hero-courtyard-1600.webp 1600w,
+                  assets/img/hero/hero-courtyard-2400.webp 2400w"
+          sizes="100vw" type="image/webp">
+        <img id="heroPhoto" src="assets/img/hero/hero-courtyard-1600.webp"
+             alt="Patio interior de The Gallery, con bambú, bicicletas y mesas de café"
+             fetchpriority="high" decoding="async" loading="eager"
+             style="background-image:url('data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JQBOgZYAg/y2mv9xq8lSAAP2MOz5Y1IgeFCCnGNHjs3s0jPhe+NFnmBixAZTeEgyeN8+3Rh5COIAwlAg2G0kFJoYnrU6HDAiiO+Lj1lTJxB3N/XAN780kMCVxP0B26GMn+gk8cAA='); background-size:cover; background-position:60% 50%;">
+      </picture>
+      <canvas id="heroReveal" aria-hidden="true"></canvas>
+    </div>
+    <div class="hero-inner wrap">
+      <p class="hero-eyebrow reveal">Un apartamento con carácter, un café abajo, y toda Condesa como extensión de la sala.</p>
+      <h1 class="hero-title reveal">Stay in the middle <span>of everything.</span></h1>
+      <div class="hero-sub reveal">
+        <p>The Gallery — apartamentos de diseño en el corazón de la Condesa, Ciudad de México.</p>
+        <div class="scroll-cue"><span class="dot"></span> Baja para ver un día aquí</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= A DAY AT THE GALLERY ================= -->
+  <section id="day">
+    <div class="wrap">
+      <div class="kicker reveal">01 — El día</div>
+      <div class="section-head">
+        <h2 class="reveal">Un día en The Gallery.</h2>
+        <p class="reveal">No vendemos amenidades. Vendemos cómo se siente un día completo aquí — desde que abres los ojos hasta que vuelves a cerrarlos.</p>
+      </div>
+      <div class="reveal">
+        <div class="day-stage" id="dayStage">
+          <div>
+            <div class="moment-title" id="momentTitle">Wake up</div>
+            <div class="moment-tag" id="momentTag">Luz natural entrando por ventanas altas. Sin alarmas.</div>
+          </div>
+        </div>
+        <div class="day-rail" id="dayRail" role="tablist" aria-label="Momentos del día"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="loud-strip reveal">
+    <div class="wrap">
+      <span class="display">Take a bike. Get lost.</span>
+      <span style="font-size:14px; font-weight:600;">Condesa is better on two wheels →</span>
+    </div>
+  </div>
+
+  <!-- ================= STAY / ROOMS ================= -->
+  <section id="stay">
+    <div class="wrap">
+      <div class="kicker reveal">02 — Stay</div>
+      <div class="section-head">
+        <h2 class="reveal">Tres formas de quedarte.</h2>
+        <p class="reveal">Cada espacio está pensado para una estancia distinta — de una escapada de fin de semana a instalarte un mes en Condesa.</p>
+      </div>
+      <div class="room-tabs reveal" id="roomTabs" role="tablist"></div>
+      <div class="room-grid reveal" id="roomContent"></div>
+    </div>
+  </section>
+
+  <!-- ================= THE HOUSE ================= -->
+  <section id="house">
+    <div class="wrap">
+      <div class="kicker reveal">03 — The House</div>
+      <div class="section-head">
+        <h2 class="reveal">Café abajo. Bicis en la puerta.</h2>
+        <p class="reveal">Lo que hace que The Gallery se sienta como barrio y no como hospedaje.</p>
+      </div>
+      <div class="house-grid reveal">
+        <div class="house-card">
+          <img class="house-photo" src="assets/img/house/cafe/cover.jpg" alt="" loading="lazy" decoding="async"
+               onload="this.classList.add('loaded')" onerror="this.remove()">
+          <span class="tag">Café</span>
+          <h3>Café de autor, abierto a la calle</h3>
+          <p>Nuestro café funciona igual para huéspedes que para vecinos — mismo mostrador, mismo grano, misma hora de apertura.</p>
+        </div>
+        <div class="house-card">
+          <img class="house-photo" src="assets/img/house/bikes/cover.jpg" alt="" loading="lazy" decoding="async"
+               onload="this.classList.add('loaded')" onerror="this.remove()">
+          <span class="tag">Bicis</span>
+          <h3>Condesa se recorre mejor en dos ruedas</h3>
+          <p>Toma una bici al salir. Parque México a cinco minutos, Roma a diez, Chapultepec a quince.</p>
+        </div>
+        <div class="house-card">
+          <img class="house-photo" src="assets/img/house/common/cover.jpg" alt="" loading="lazy" decoding="async"
+               onload="this.classList.add('loaded')" onerror="this.remove()">
+          <span class="tag">Espacios comunes</span>
+          <h3>Un lugar para trabajar, no solo para dormir</h3>
+          <p>Mesas largas, buena luz, wifi que de verdad funciona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="loud-strip reveal" style="background:var(--nopal); color:var(--hueso);">
+    <div class="wrap">
+      <span class="display">Good coffee downstairs.</span>
+      <span style="font-size:14px; font-weight:600;">Same counter for guests and neighbors →</span>
+    </div>
+  </div>
+
+  <!-- ================= CONDESA ================= -->
+  <section id="condesa">
+    <div class="wrap">
+      <div class="kicker reveal">04 — Condesa</div>
+      <div class="section-head">
+        <h2 class="reveal">Tu Condesa, curada.</h2>
+        <p class="reveal">No un mapa de Google. Cuatro formas de vivir el barrio, según el momento del día que busques.</p>
+      </div>
+      <div class="itin-tabs reveal" id="itinTabs" role="tablist"></div>
+      <div class="reveal" id="itinList"></div>
+    </div>
+  </section>
+
+  <!-- ================= THE VIBE ================= -->
+  <section id="vibe">
+    <div class="wrap">
+      <div class="kicker reveal">05 — The Vibe</div>
+      <div class="vibe-wrap reveal">
+        <div>
+          <h2 style="font-size:clamp(30px,3.6vw,46px); margin:0 0 20px;">El arte no es la razón por la que vienes. Es la razón por la que te acuerdas.</h2>
+          <p style="font-size:15px; color:#4A453D; line-height:1.7;">Cada habitación tiene al menos una pieza de un artista emergente de Ciudad de México. No hay recorrido guiado ni catálogo — solo una tarjeta junto a la obra.</p>
+          <div class="vibe-tags">
+            <span>Artistas locales</span>
+            <span>Piezas rotativas</span>
+            <span>Sin recorrido guiado</span>
+          </div>
+        </div>
+        <div class="vibe-quote">"Llegué por la ubicación. Me quedé viendo quién había pintado el cuadro de mi cuarto."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BOOK ================= -->
+  <section id="book">
+    <div class="wrap">
+      <div class="book-section">
+        <div class="wrap">
+          <div class="kicker reveal" style="color:var(--cempasuchil);">06 — Book</div>
+          <h2 class="reveal" style="font-size:clamp(32px,4vw,52px); max-width:16ch;">Reserva tu estancia en Condesa.</h2>
+          <p class="reveal" style="max-width:44ch; font-size:15px; opacity:.85;">Disponibilidad en tiempo real. Sin comisiones ocultas, sin letra chica.</p>
+          <form class="book-form reveal" id="bookForm">
+            <div class="book-field"><label for="checkin">Llegada</label><input type="date" id="checkin" required></div>
+            <div class="book-field"><label for="checkout">Salida</label><input type="date" id="checkout" required></div>
+            <div class="book-field"><label for="guests">Huéspedes</label>
+              <select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
+            </div>
+            <div class="book-field"><label for="roomSelect">Espacio</label>
+              <select id="roomSelect"><option value="studio">The Studio</option><option value="loft">The Loft</option><option value="corner">The Corner</option></select>
+            </div>
+            <button type="submit" class="book-submit">Ver disponibilidad</button>
+          </form>
+          <p id="bookNote" style="font-size:12px; color:#8A8072; margin-top:14px; display:none;">Selecciona fechas y espacio para consultar disponibilidad real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="logotype" style="margin-bottom:8px;">The Gallery</div>
+      <p style="margin:0; max-width:28ch;">Amsterdam 173, Condesa, Ciudad de México.</p>
+    </div>
+    <div class="foot-cols">
+      <div>
+        <strong style="font-size:12px; color:var(--tinta);">Explorar</strong>
+        <a href="#stay">Stay</a><a href="#house">The House</a><a href="#condesa">Condesa</a><a href="#vibe">The Vibe</a>
+      </div>
+      <div>
+        <strong style="font-size:12px; color:var(--tinta);">Contacto</strong>
+        <a href="mailto:hola@thegallery.mx">hola@thegallery.mx</a><a href="#book">Reservar</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script src="js/hero-reveal.js" defer></script>
+</body>
+</html>
