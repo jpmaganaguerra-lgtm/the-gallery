@@ -27,6 +27,13 @@
   var photo = document.getElementById('heroPhoto');
   if (!wrap || !canvas || !photo) return;
 
+  // El texto del hero (h1) vive en un elemento HERMANO de heroMedia,
+  // superpuesto encima con z-index. Si el listener se pega solo a
+  // heroMedia, el mouse "se pierde" en cuanto pasa sobre las letras,
+  // porque el evento no bubblea entre hermanos — solo hacia arriba.
+  // Por eso el listener va en el contenedor común (.hero).
+  var listenTarget = wrap.closest('.hero') || wrap;
+
   var ctx = canvas.getContext('2d', { alpha: true });
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -104,10 +111,10 @@
 
   function onLeave() { lastX = null; lastY = null; }
 
-  wrap.addEventListener('mousemove', onMove, { passive: true });
-  wrap.addEventListener('touchmove', onMove, { passive: true });
-  wrap.addEventListener('mouseleave', onLeave, { passive: true });
-  wrap.addEventListener('touchend', onLeave, { passive: true });
+  listenTarget.addEventListener('mousemove', onMove, { passive: true });
+  listenTarget.addEventListener('touchmove', onMove, { passive: true });
+  listenTarget.addEventListener('mouseleave', onLeave, { passive: true });
+  listenTarget.addEventListener('touchend', onLeave, { passive: true });
 
   window.addEventListener('resize', sizeCanvas, { passive: true });
 
