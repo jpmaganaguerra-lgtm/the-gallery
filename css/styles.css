@@ -86,10 +86,25 @@
   .loud-strip .display{ font-size:clamp(26px,3.4vw,42px); }
 
   /* ---------- DAY ---------- */
-  .day-stage{ aspect-ratio:16/8.5; border-radius:28px; overflow:hidden; position:relative; background:var(--acento-2); color:var(--sobre-acento); display:flex; align-items:flex-end; padding:44px; transition:background .5s ease; }
-  @media (max-width:640px){ .day-stage{ aspect-ratio:4/5; padding:26px; border-radius:20px; } }
-  .day-stage .moment-title{ font-size:clamp(30px,4.6vw,54px); margin-bottom:8px; }
-  .day-stage .moment-tag{ font-size:14px; opacity:.9; max-width:44ch; }
+  /* ---------- DAY — foto real por momento + banner de color ----------
+     La foto y el banner viven en el mismo card. El banner cambia de
+     color según el capítulo del momento (magenta/cempasúchil/nopal),
+     igual que el resto del sistema de acentos por capítulo. */
+  .day-stage{ border-radius:28px; overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  .day-photo-wrap{ position:relative; width:100%; aspect-ratio:16/10; background:var(--linea); overflow:hidden; }
+  @media (max-width:640px){ .day-photo-wrap{ aspect-ratio:1/1; } }
+  .day-photo-wrap img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .45s ease;
+  }
+  .day-photo-wrap img.active{ opacity:1; }
+  .day-banner{
+    padding:40px 44px; color:var(--sobre-acento); background:var(--dia-color, var(--magenta));
+    transition:background .4s ease;
+  }
+  @media (max-width:640px){ .day-banner{ padding:26px; } }
+  .day-banner .moment-title{ font-size:clamp(28px,4vw,50px); margin-bottom:8px; }
+  .day-banner .moment-tag{ font-size:14px; opacity:.92; max-width:48ch; }
   .day-rail{ display:flex; gap:10px; margin-top:22px; overflow-x:auto; }
   .day-step{ flex:1; min-width:110px; text-align:left; padding:16px; border-radius:16px; font-size:13px; font-weight:600; background:var(--hueso); border:2px solid var(--linea); color:#4A453D; transition:border-color .25s ease, color .25s ease, transform .2s ease; }
   .day-step .num{ display:block; font-size:20px; margin-bottom:6px; }

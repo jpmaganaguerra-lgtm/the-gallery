@@ -1,11 +1,17 @@
 
 const DAY_MOMENTS = [
-  { label:"Wake up", tag:"Luz natural entrando por ventanas altas. Sin alarmas.", chapter:"stay" },
-  { label:"Make coffee", tag:"Bajas al café. El barista ya sabe cómo te gusta.", chapter:"house" },
-  { label:"Go out", tag:"Tomas una bici. Parque México a cinco minutos.", chapter:"house" },
-  { label:"Come back", tag:"Trabajas una hora en la mesa larga de la sala común.", chapter:"house" },
-  { label:"Have a drink", tag:"Mezcal en una terraza a la vuelta, antes de que anochezca.", chapter:"condesa" },
-  { label:"Sleep", tag:"De vuelta al cuarto. Mañana se repite, distinto.", chapter:"stay" }
+  { label:"Wake up", tag:"Luz natural entrando por ventanas altas. Sin alarmas.", chapter:"stay",
+    img:"assets/img/day/Wake-up-at-The-Gallery-Condesa.webp" },
+  { label:"Make coffee", tag:"Bajas al café. El barista ya sabe cómo te gusta.", chapter:"house",
+    img:"assets/img/day/Make-Coffee-at-The-Gallery-Condesa.webp" },
+  { label:"Go out", tag:"Tomas una bici. Parque México a cinco minutos.", chapter:"house",
+    img:"assets/img/day/Get-Out-at-The-Gallery-Condesa.webp" },
+  { label:"Come back", tag:"Trabajas una hora en la mesa larga de la sala común.", chapter:"house",
+    img:"assets/img/day/Come-Back-to-The-Gallery-Condesa.webp" },
+  { label:"Have a drink", tag:"Mezcal en una terraza a la vuelta, antes de que anochezca.", chapter:"condesa",
+    img:"assets/img/day/Have-a-drink-at-The-Gallery-Condesa.webp" },
+  { label:"Sleep", tag:"De vuelta al cuarto. Mañana se repite, distinto.", chapter:"stay",
+    img:"assets/img/day/Sleep-at-The-Gallery-Condesa.webp" }
 ];
 
 const ROOMS = [
@@ -69,22 +75,44 @@ const chapterObserver = new IntersectionObserver((entries)=>{
 chapterSections.forEach(s=>chapterObserver.observe(s));
 
 const dayRail = document.getElementById('dayRail');
-const dayStage = document.getElementById('dayStage');
+const dayPhotoWrap = document.getElementById('dayPhotoWrap');
+const dayBanner = document.getElementById('dayBanner');
 const momentTitle = document.getElementById('momentTitle');
 const momentTag = document.getElementById('momentTag');
 let activeMoment = 0, dayAutoTimer=null;
 
+// Las 6 fotos se insertan una sola vez, apiladas, y se cambia de cuál
+// está "activa" (opacity) — así el navegador solo las descarga una vez
+// y el cambio entre momentos es un crossfade instantáneo, sin parpadeo.
+DAY_MOMENTS.forEach((m,i)=>{
+  const img = el('img', {
+    class: 'day-photo' + (i===0 ? ' active' : ''),
+    src: m.img,
+    alt: `${m.label} — The Gallery Condesa`,
+    loading: i===0 ? 'eager' : 'lazy',
+    decoding: 'async',
+    'data-index': i,
+    onerror: 'this.remove()'
+  });
+  dayPhotoWrap.appendChild(img);
+});
+
 DAY_MOMENTS.forEach((m,i)=>{
   const step = el('button', {class:'day-step'+(i===0?' active':''), role:'tab', 'aria-selected': i===0?'true':'false', 'data-index':i}, `<span class="num">0${i+1}</span>${m.label}`);
+  // "Rollover": el cursor sobre la pestaña cambia la foto. click y focus
+  // quedan como respaldo para touch/teclado, donde no existe hover.
+  step.addEventListener('mouseenter', ()=>setMoment(i,true));
   step.addEventListener('click', ()=>setMoment(i,true));
+  step.addEventListener('focus', ()=>setMoment(i,true));
   dayRail.appendChild(step);
 });
 
-const CHAPTER_BG = { stay:'var(--magenta-2)', house:'var(--cempasuchil-2)', condesa:'var(--nopal-2)' };
+const CHAPTER_BANNER = { stay:'var(--magenta)', house:'var(--cempasuchil)', condesa:'var(--nopal)' };
 function setMoment(i, user){
   activeMoment=i; const m=DAY_MOMENTS[i];
   momentTitle.textContent=m.label; momentTag.textContent=m.tag;
-  dayStage.style.background = CHAPTER_BG[m.chapter] || CHAPTER_BG.stay;
+  dayBanner.style.background = CHAPTER_BANNER[m.chapter] || CHAPTER_BANNER.stay;
+  document.querySelectorAll('.day-photo').forEach((img,idx)=>img.classList.toggle('active', idx===i));
   document.querySelectorAll('.day-step').forEach((el,idx)=>{ el.classList.toggle('active', idx===i); el.setAttribute('aria-selected', idx===i?'true':'false'); });
   if(user) resetAuto();
 }
