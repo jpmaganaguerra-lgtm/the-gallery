@@ -47,7 +47,9 @@
     color:var(--hueso);
   }
   header.site.scrolled{ background:rgba(23,21,18,0.88); backdrop-filter:blur(10px); padding:14px 32px; }
-  .logotype{ font-weight:700; font-size:20px; color:var(--hueso); }
+  .logotype{ font-weight:700; font-size:20px; color:var(--hueso); display:inline-flex; align-items:center; }
+  .logo-img{ height:32px; width:auto; display:block; }
+  @media (max-width:640px){ .logo-img{ height:26px; } }
   nav.chapters{ display:flex; gap:0; border:1.5px solid var(--hueso); border-radius:999px; padding:4px; }
   nav.chapters a{ font-size:13px; font-weight:600; padding:8px 16px; border-radius:999px; color:var(--hueso); transition:background .25s ease, color .25s ease; }
   nav.chapters a.active, nav.chapters a:hover{ background:var(--hueso); color:var(--tinta); }
