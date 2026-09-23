@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Dónde vive el sitio publicado — necesario para el botón "Preview"
+site_url: https://the-gallery-condesa.netlify.app
+
+media_folder: "assets/img/blog"
+public_folder: "assets/img/blog"
+
+collections:
+  - name: "living_condesa"
+    label: "Living Condesa — Blog"
+    files:
+      - file: "content/posts.json"
+        label: "Posts"
+        name: "posts_file"
+        fields:
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Slug (URL, sin espacios)", name: "slug", widget: "string" }
+              - label: "Categoría"
+                name: "category"
+                widget: "select"
+                options: ["Morning", "Nightlife", "Bikes", "Art", "Food", "Community"]
+              - { label: "Fecha", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+              - { label: "Foto de portada", name: "cover", widget: "image" }
+              - { label: "Extracto (se ve en la tarjeta)", name: "excerpt", widget: "text" }
+              - label: "Contenido"
+                name: "body"
+                widget: "text"
+                hint: "Separa los párrafos con una línea en blanco."
