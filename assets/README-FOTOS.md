@@ -16,6 +16,16 @@ muestra el bloque de color de respaldo (nunca se rompe el diseño).
 Ya está poblada con la foto del patio que enviaste (`hero-courtyard-900/1600/2400.webp`).
 Si quieres cambiarla más adelante, sustituye los tres tamaños con los mismos nombres.
 
+## `assets/img/day/`
+Ya conectada — 6 fotos, una por momento de "A Day at The Gallery". Nombres exactos usados
+en el código (horizontal, 16:10 aprox.):
+- `Wake-up-at-The-Gallery-Condesa.webp`
+- `Make-Coffee-at-The-Gallery-Condesa.webp`
+- `Get-Out-at-The-Gallery-Condesa.webp`
+- `Come-Back-to-The-Gallery-Condesa.webp`
+- `Have-a-drink-at-The-Gallery-Condesa.webp`
+- `Sleep-at-The-Gallery-Condesa.webp`
+
 ## `assets/img/stay/studio/cover.jpg`
 ## `assets/img/stay/loft/cover.jpg`
 ## `assets/img/stay/corner/cover.jpg`
@@ -28,13 +38,10 @@ al seleccionar cada tab.
 Una foto por tarjeta de "The House" (horizontal). Se muestran como textura semitransparente
 detrás del color — no reemplazan el bloque, lo enriquecen.
 
-## `assets/img/condesa/morning/`, `date/`, `sunday/`, `night/`
-Reservadas para cuando quieras agregar una foto por parada del itinerario (próxima fase,
-aún no conectadas al HTML).
-
-## `assets/img/vibe/art/`, `assets/img/vibe/community/`
-Reservadas para fotos de las piezas de arte en las habitaciones y momentos de comunidad
-(próxima fase).
+## `assets/img/blog/`
+Portadas de los posts de "Living Condesa". Ya no se suben a mano aquí — se suben
+directamente desde el backoffice en `/admin` al crear o editar un post, y el CMS
+las guarda solo en esta carpeta.
 
 ## `assets/logo/`
 Logotipo de The Gallery en PNG con fondo transparente, variante oscura y variante clara,
