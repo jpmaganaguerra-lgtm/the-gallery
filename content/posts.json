@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "title": "The Perfect Morning en Condesa",
+      "slug": "the-perfect-morning",
+      "category": "Morning",
+      "date": "2026-08-04",
+      "cover": "assets/img/blog/the-perfect-morning.jpg",
+      "excerpt": "Café y pan en la esquina, vuelta al Parque México y el mercado sobre Michoacán — así arranca un día bien vivido en el barrio.",
+      "body": "El café de la casa abre a las 7:30, o puedes caminar cinco minutos hasta la panadería de Ámsterdam si prefieres algo recién salido del horno.\n\nA las 8:15 vale la pena bajar al Parque México — veinte minutos caminando, menos en bici. Los corredores locales suelen salir antes de las ocho, así que si quieres verlo tranquilo, este es el momento.\n\nCierra la mañana en el mercado sobre Michoacán: fruta, flores, y el puesto de jugos que lleva ahí treinta años."
+    },
+    {
+      "title": "The Perfect Date Night",
+      "slug": "the-perfect-date",
+      "category": "Nightlife",
+      "date": "2026-08-11",
+      "cover": "assets/img/blog/the-perfect-date.jpg",
+      "excerpt": "Una terraza sin letrero, una fonda de siete mesas y el camellón de Ámsterdam de noche.",
+      "body": "Empezamos en una terraza que no tiene letrero en la calle — nuestro equipo te da la dirección al llegar.\n\nDe ahí, una fonda de siete mesas que solo toma reservaciones con dos días de anticipación. Vale la pena esperar.\n\nY para cerrar, una caminata de vuelta por el camellón circular de Ámsterdam — el mejor tramo de la colonia de noche."
+    },
+    {
+      "title": "The Perfect Sunday",
+      "slug": "the-perfect-sunday",
+      "category": "Bikes",
+      "date": "2026-08-18",
+      "cover": "assets/img/blog/the-perfect-sunday.jpg",
+      "excerpt": "Ciclovía sobre Reforma, brunch tardío en Roma Norte, y la tarde libre — a propósito.",
+      "body": "Los domingos, Reforma cierra al tráfico para la ciclovía. Toma una de nuestras bicis o renta una en el camino.\n\nDespués, cruza Insurgentes hacia Roma Norte para un brunch tardío — quince minutos en bici.\n\nEl resto de la tarde, déjalo abierto. El mejor domingo en Condesa es el que no llenas de itinerario."
+    },
+    {
+      "title": "El arte que vive en las habitaciones",
+      "slug": "art-in-the-house",
+      "category": "Art",
+      "date": "2026-08-25",
+      "cover": "assets/img/blog/art-in-the-house.jpg",
+      "excerpt": "Cada habitación tiene al menos una pieza de un artista emergente de Ciudad de México. Sin recorrido guiado, sin catálogo.",
+      "body": "No hay un tour por la casa ni una placa con audioguía. Solo una tarjeta pequeña junto a cada obra, por si te da curiosidad quién la hizo.\n\nLas piezas rotan un par de veces al año, casi siempre de artistas que ya conocemos del barrio. La idea nunca fue convertir The Gallery en una galería — es que el arte esté ahí, de fondo, hasta que un día te detienes a verlo de verdad."
+    }
+  ]
+}
