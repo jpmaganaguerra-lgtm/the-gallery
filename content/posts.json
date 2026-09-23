@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "title": "Dónde hospedarse en la Condesa: guía por calle y ambiente",
+      "slug": "donde-hospedarte-condesa",
+      "category": "Guía",
+      "date": "2026-09-25",
+      "cover": "assets/img/blog/donde-hospedarte-condesa.jpg",
+      "excerpt": "La Condesa no es una sola colonia — son cuatro sub-zonas con personalidad distinta. Te decimos cuál te conviene según tu viaje.",
+      "url": "living-condesa/donde-hospedarte-condesa.html"
+    },
+    {
       "title": "Guía de ruido en la Condesa: las calles más tranquilas para dormir bien",
       "slug": "guia-ruido-condesa",
       "category": "Guía",
