@@ -26,11 +26,17 @@ collections:
               - label: "Categoría"
                 name: "category"
                 widget: "select"
-                options: ["Morning", "Nightlife", "Bikes", "Art", "Food", "Community"]
+                options: ["Guía", "Morning", "Nightlife", "Bikes", "Art", "Food", "Community"]
               - { label: "Fecha", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
               - { label: "Foto de portada", name: "cover", widget: "image" }
               - { label: "Extracto (se ve en la tarjeta)", name: "excerpt", widget: "text" }
+              - label: "Página propia (SEO) — opcional"
+                name: "url"
+                widget: "string"
+                required: false
+                hint: "Solo para piezas de guía con su propia página HTML (ej. living-condesa/nombre.html). Si lo llenas, la tarjeta lleva directo a esa página en vez de abrir el modal — y el contenido de abajo (Contenido) se ignora."
               - label: "Contenido"
                 name: "body"
                 widget: "text"
-                hint: "Separa los párrafos con una línea en blanco."
+                required: false
+                hint: "Solo se usa si 'Página propia' está vacío. Separa los párrafos con una línea en blanco."
