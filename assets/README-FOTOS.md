@@ -39,9 +39,10 @@ Una foto por tarjeta de "The House" (horizontal). Se muestran como textura semit
 detrás del color — no reemplazan el bloque, lo enriquecen.
 
 ## `assets/img/blog/`
-Portadas de los posts de "Living Condesa". Ya no se suben a mano aquí — se suben
-directamente desde el backoffice en `/admin` al crear o editar un post, y el CMS
-las guarda solo en esta carpeta.
+Portadas de los posts de "Living Condesa". Se suben desde el backoffice en `/admin`,
+excepto la de la primera guía (SEO), que ya referencié directo:
+- `guia-ruido-condesa.jpg` — horizontal, 16:8 aprox. (foto de una calle arbolada y
+  tranquila de la Condesa, de noche o al atardecer).
 
 ## `assets/logo/`
 Logotipo de The Gallery en PNG con fondo transparente, variante oscura y variante clara,
