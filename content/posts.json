@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "title": "Guía de ruido en la Condesa: las calles más tranquilas para dormir bien",
+      "slug": "guia-ruido-condesa",
+      "category": "Guía",
+      "date": "2026-09-24",
+      "cover": "assets/img/blog/guia-ruido-condesa.jpg",
+      "excerpt": "La diferencia entre dormir bien o no en la Condesa son, a veces, dos calles. Comparamos el ruido nocturno zona por zona, con datos.",
+      "url": "living-condesa/guia-ruido-condesa.html"
+    },
+    {
       "title": "The Perfect Morning en Condesa",
       "slug": "the-perfect-morning",
       "category": "Morning",
