@@ -35,8 +35,15 @@
   }
 
   function cardHtml(post) {
+    // Los posts con "url" son piezas SEO/GEO con página propia (indexable,
+    // con su propio <title>/meta) — la tarjeta navega ahí directo, no
+    // abre el modal. Los posts sin "url" (relatos cortos, "como local")
+    // siguen usando el modal in-page.
+    var tag = post.url ? 'a' : 'button';
+    var linkAttr = post.url ? ' href="' + esc(post.url) + '"' : '';
+    var dataAttr = post.url ? '' : ' data-slug="' + esc(post.slug) + '"';
     return (
-      '<button class="post-card" data-slug="' + esc(post.slug) + '">' +
+      '<' + tag + ' class="post-card"' + linkAttr + dataAttr + '>' +
         '<img class="post-cover" src="' + esc(post.cover) + '" alt="' + esc(post.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">' +
         '<div class="post-body">' +
           '<span class="post-cat">' + esc(post.category) + '</span>' +
@@ -44,7 +51,7 @@
           '<p>' + esc(post.excerpt) + '</p>' +
           '<span class="post-date">' + esc(formatDate(post.date)) + '</span>' +
         '</div>' +
-      '</button>'
+      '</' + tag + '>'
     );
   }
 
@@ -86,6 +93,7 @@
       track.addEventListener('click', function (e) {
         var card = e.target.closest('.post-card');
         if (!card) return;
+        if (card.tagName === 'A') return; // tiene su propia página — navegación normal
         var post = posts.find(function (p) { return p.slug === card.dataset.slug; });
         if (post) openPost(post);
       });
