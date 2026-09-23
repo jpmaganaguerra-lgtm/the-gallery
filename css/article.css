@@ -1,9 +1,11 @@
 /* ============================================================
    ARTICLE — sistema editorial para piezas de Living Condesa
    Se carga ADEMÁS de css/styles.css (no lo reemplaza) — reutiliza
-   fuente, colores y tokens del sitio, solo agrega los componentes
-   que un artículo largo necesita y que la home no usa: tabla de
-   datos, breadcrumb, callout de "Tip del Anfitrión" y banners CTA.
+   fuente y tokens del sitio, y aquí sí usa el color a fondo (chile,
+   cempasúchil, nopal, magenta) para estar a tono con el resto del
+   sitio — pero siempre con una razón funcional, nunca decorativo
+   porque sí: la tabla usa colores de semáforo real porque el
+   artículo se llama "semáforo del descanso".
    ============================================================ */
 
 .article-header{ padding:110px 0 0; }
@@ -11,19 +13,21 @@
 .breadcrumb a{ color:#8A8072; border-bottom:1px solid transparent; }
 .breadcrumb a:hover{ color:var(--tinta); border-color:var(--tinta); }
 
-.article-meta{ display:flex; gap:14px; align-items:center; font-size:13px; color:#8A8072; margin-bottom:22px; }
-.article-meta .post-cat{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--nopal); }
+.article-meta{ display:flex; gap:12px; align-items:center; font-size:13px; color:#8A8072; margin-bottom:22px; flex-wrap:wrap; }
+.article-meta .post-cat{
+  font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  background:var(--chile); color:var(--hueso); padding:6px 14px; border-radius:999px;
+}
 .article-meta .dot{ width:4px; height:4px; border-radius:50%; background:#C9C2B4; }
 
 .article-title{ font-size:clamp(34px,5.2vw,64px); line-height:1.02; max-width:18ch; margin:0 0 26px; }
+.article-title .hl{ color:var(--nopal); }
 .article-dek{ font-size:17px; color:#4A453D; max-width:56ch; line-height:1.6; margin:0 0 40px; }
 
-.article-cover{ width:100%; aspect-ratio:16/8; object-fit:cover; border-radius:4px; margin-bottom:8px; background:var(--linea); }
+.article-cover{ width:100%; aspect-ratio:16/8; object-fit:cover; border-radius:22px; margin-bottom:8px; background:var(--linea); }
 .article-cover-credit{ font-size:12px; color:#8A8072; margin:0 0 64px; }
 
 .article-body{ max-width:680px; margin:0 auto; padding-bottom:100px; }
-.article-body h2{ font-size:clamp(24px,3vw,32px); margin:56px 0 18px; line-height:1.15; }
-.article-body h2 .num{ color:var(--nopal); margin-right:10px; font-variant-numeric:tabular-nums; }
 .article-body p{ font-size:16px; line-height:1.75; color:#3A362F; margin:0 0 20px; }
 .article-body strong{ color:var(--tinta); }
 .article-body ul{ margin:0 0 24px; padding-left:0; list-style:none; }
@@ -31,41 +35,88 @@
 .article-body ul li:last-child{ border-bottom:1px solid var(--linea); }
 .article-body ul li strong{ display:block; font-size:15px; margin-bottom:3px; }
 
-/* ---------- Tabla del "semáforo del descanso" — editorial, sin gridlines pesadas ---------- */
-.data-table-wrap{ overflow-x:auto; margin:0 0 12px; border-top:2px solid var(--tinta); }
+/* ---------- Encabezados de sección — número en pastilla de color,
+   rotando por la paleta de la marca en vez de repetir siempre el
+   mismo acento (le da ritmo LOUD·QUIET·LOUD al bajar la página) ---------- */
+.article-body h2{
+  display:flex; align-items:center; gap:16px;
+  font-size:clamp(24px,3vw,32px); margin:64px 0 22px; line-height:1.1;
+}
+.article-body h2 .num{
+  flex:0 0 auto; width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; font-weight:700; color:var(--hueso);
+  font-variant-numeric:tabular-nums;
+}
+.article-body h2:nth-of-type(4n+1) .num{ background:var(--nopal); }
+.article-body h2:nth-of-type(4n+2) .num{ background:var(--chile); }
+.article-body h2:nth-of-type(4n+3) .num{ background:var(--cempasuchil); color:#171512; }
+.article-body h2:nth-of-type(4n)   .num{ background:var(--magenta); }
+
+/* ---------- Tabla "semáforo del descanso" — colores REALES de semáforo:
+   la columna de dB lleva un chip rojo/amarillo/verde según qué tan
+   ruidosa es la zona, y la fila entera se tiñe muy suave a juego. ---------- */
+.table-legend{ display:flex; gap:18px; flex-wrap:wrap; margin-bottom:18px; }
+.table-legend span{ display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#4A453D; font-weight:600; }
+.table-legend .dotc{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.table-legend .dotc.loud{ background:var(--chile); }
+.table-legend .dotc.mid{ background:var(--cempasuchil); }
+.table-legend .dotc.quiet{ background:var(--nopal); }
+
+.data-table-wrap{ overflow-x:auto; margin:0 0 12px; border-radius:18px; border:2px solid var(--tinta); }
 table.data-table{ width:100%; border-collapse:collapse; font-size:14px; min-width:560px; }
 table.data-table th{
   text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
-  color:#8A8072; padding:14px 16px 14px 0; border-bottom:1px solid var(--linea);
+  color:var(--hueso); background:var(--tinta); padding:14px 16px;
 }
-table.data-table td{ padding:16px 16px 16px 0; border-bottom:1px solid var(--linea); vertical-align:top; color:#3A362F; }
-table.data-table td:first-child, table.data-table th:first-child{ font-weight:600; color:var(--tinta); }
-table.data-table .db{ font-variant-numeric:tabular-nums; font-weight:600; color:var(--nopal); }
+table.data-table td{ padding:16px; border-bottom:1px solid var(--linea); vertical-align:top; color:#3A362F; }
+table.data-table tr:last-child td{ border-bottom:none; }
+table.data-table td:first-child{ font-weight:700; color:var(--tinta); }
+table.data-table .db{ font-variant-numeric:tabular-nums; font-weight:700; display:inline-flex; align-items:center; gap:8px; }
+table.data-table .db::before{ content:""; width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+table.data-table tr.loud  td{ background:rgba(217,58,43,.07); }
+table.data-table tr.loud  .db{ color:var(--chile); }
+table.data-table tr.loud  .db::before{ background:var(--chile); }
+table.data-table tr.mid   td{ background:rgba(242,167,59,.10); }
+table.data-table tr.mid   .db{ color:#8A6A1E; }
+table.data-table tr.mid   .db::before{ background:var(--cempasuchil); }
+table.data-table tr.quiet td{ background:rgba(60,107,53,.08); }
+table.data-table tr.quiet .db{ color:var(--nopal); }
+table.data-table tr.quiet .db::before{ background:var(--nopal); }
 .table-note{ font-size:12px; color:#8A8072; margin:0 0 40px; }
 
-/* ---------- Tip del anfitrión — dato cuantitativo, pensado para GEO ---------- */
-.host-tip{
-  background:var(--tinta); color:var(--hueso); border-radius:20px; padding:28px 32px; margin:32px 0;
+/* ---------- Stat destacado — el dato más citable del artículo,
+   tratado como pieza tipográfica grande (mismo lenguaje que los
+   números de habitación en Stay), no como texto de más. ---------- */
+.stat-block{
+  background:var(--tinta); color:var(--hueso); border-radius:24px;
+  padding:40px 36px; margin:40px 0; display:flex; align-items:center; gap:28px; flex-wrap:wrap;
 }
-.host-tip .tip-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--cempasuchil); margin-bottom:8px; display:block; }
-.host-tip p{ color:var(--hueso); margin:0; font-size:15px; line-height:1.65; }
+.stat-block .stat-num{ font-size:clamp(56px,8vw,88px); font-weight:700; line-height:.9; color:var(--cempasuchil); }
+.stat-block .stat-copy{ flex:1; min-width:220px; }
+.stat-block .tip-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--cempasuchil); margin-bottom:8px; display:block; }
+.stat-block p{ color:var(--hueso); margin:0; font-size:15px; line-height:1.65; }
 
-/* ---------- Banner CTA — franja de color, igual criterio que loud-strip de la home ---------- */
+/* ---------- Banners CTA — cada uno con su color, para que el ojo
+   los distinga como pausas de ritmo, no como el mismo bloque repetido ---------- */
 .cta-banner{
-  background:var(--magenta); color:var(--hueso); border-radius:20px; padding:32px 34px; margin:40px 0;
+  border-radius:20px; padding:32px 34px; margin:40px 0;
   display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
 }
-.cta-banner p{ color:var(--hueso); margin:0; font-size:16px; font-weight:600; max-width:40ch; }
-.cta-banner .btn{
-  background:var(--hueso); color:var(--tinta); padding:12px 24px; border-radius:999px; font-size:14px; font-weight:700;
-  white-space:nowrap;
-}
-.cta-banner.secondary{ background:var(--hueso); border:2px solid var(--linea); }
-.cta-banner.secondary p{ color:var(--tinta); }
-.cta-banner.secondary .btn{ background:var(--tinta); color:var(--hueso); }
+.cta-banner p{ margin:0; font-size:16px; font-weight:600; max-width:40ch; }
+.cta-banner .btn{ padding:12px 24px; border-radius:999px; font-size:14px; font-weight:700; white-space:nowrap; }
+
+.cta-banner.map{ background:var(--cempasuchil); }
+.cta-banner.map p{ color:#171512; }
+.cta-banner.map .btn{ background:#171512; color:var(--cempasuchil); }
+
+.cta-banner.book{ background:var(--magenta); }
+.cta-banner.book p{ color:var(--hueso); }
+.cta-banner.book .btn{ background:var(--hueso); color:var(--magenta); }
 
 @media (max-width:640px){
   .article-header{ padding-top:90px; }
   .article-cover{ aspect-ratio:4/5; }
-  .cta-banner{ padding:24px; }
+  .cta-banner, .stat-block{ padding:24px; }
+  .stat-block{ flex-direction:column; align-items:flex-start; }
 }
