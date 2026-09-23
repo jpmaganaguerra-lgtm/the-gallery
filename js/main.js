@@ -32,29 +32,6 @@ const ROOMS = [
     bg:"var(--magenta)", img:"assets/img/stay/corner/cover.jpg" }
 ];
 
-const ITINERARIES = {
-  morning:[
-    { time:"7:30", title:"Café y pan en la esquina", desc:"El café de la casa, o cinco minutos caminando hasta la panadería de Ámsterdam." },
-    { time:"8:15", title:"Vuelta al Parque México", desc:"20 minutos a pie, mejor en bici." },
-    { time:"9:30", title:"Mercado sobre Michoacán", desc:"Fruta, flores y el puesto de jugos de siempre." }
-  ],
-  date:[
-    { time:"19:00", title:"Copa en una terraza sin letrero", desc:"Nuestro concierge te da la dirección." },
-    { time:"20:30", title:"Cena en una fonda de siete mesas", desc:"Reserva con dos días." },
-    { time:"22:30", title:"Caminata de vuelta por Ámsterdam", desc:"El camellón circular, de noche." }
-  ],
-  sunday:[
-    { time:"10:00", title:"Ciclovía sobre Reforma", desc:"Domingo cerrado al tráfico." },
-    { time:"12:30", title:"Brunch tardío en Roma Norte", desc:"Quince minutos en bici." },
-    { time:"17:00", title:"Nada planeado", desc:"El mejor domingo es el que no llenas de itinerario." }
-  ],
-  night:[
-    { time:"21:00", title:"Mezcalería de barra chica", desc:"Ocho lugares en la barra, sin reservación." },
-    { time:"23:00", title:"Show en un foro sin nombre", desc:"Música en vivo casi todas las noches." },
-    { time:"1:00", title:"Tacos de canasta de regreso", desc:"El puesto de siempre, a dos cuadras." }
-  ]
-};
-
 function el(tag, attrs={}, html=""){ const e=document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); if(html) e.innerHTML=html; return e; }
 
 const revealObserver = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); }); }, {threshold:.15});
@@ -63,7 +40,7 @@ document.querySelectorAll('.reveal').forEach(e=>revealObserver.observe(e));
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', ()=>{ header.classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
 
-const chapterSections = ['stay','house','condesa','vibe'].map(id=>document.getElementById(id));
+const chapterSections = ['stay','house','condesa'].map(id=>document.getElementById(id));
 const chapterObserver = new IntersectionObserver((entries)=>{
   entries.forEach(en=>{
     if(en.isIntersecting){
@@ -153,21 +130,5 @@ function renderRoom(i, animate){
   if(animate){ roomContentEl.style.opacity=0; requestAnimationFrame(()=>{ roomContentEl.style.transition='opacity .35s ease'; roomContentEl.style.opacity=1; }); }
 }
 renderRoom(0,false);
-
-const itinTabsEl = document.getElementById('itinTabs');
-const itinListEl = document.getElementById('itinList');
-const ITIN_LABELS = { morning:"The Perfect Morning", date:"The Perfect Date", sunday:"The Perfect Sunday", night:"The Perfect Night" };
-Object.keys(ITINERARIES).forEach((key,i)=>{
-  const tab = el('button', {class:'itin-tab'+(i===0?' active':''), 'data-key':key}, ITIN_LABELS[key]);
-  tab.addEventListener('click', ()=>renderItinerary(key));
-  itinTabsEl.appendChild(tab);
-});
-function renderItinerary(key){
-  document.querySelectorAll('.itin-tab').forEach(t=>t.classList.toggle('active', t.dataset.key===key));
-  itinListEl.innerHTML = ITINERARIES[key].map(row=>`
-    <div class="itin-row"><div class="time">${row.time}</div><div><h4>${row.title}</h4><p>${row.desc}</p></div></div>
-  `).join('');
-}
-renderItinerary('morning');
 
 document.getElementById('bookForm').addEventListener('submit', e=>{ e.preventDefault(); document.getElementById('bookNote').style.display='block'; });

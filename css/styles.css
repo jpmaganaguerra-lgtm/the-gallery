@@ -135,31 +135,69 @@
   /* ---------- HOUSE ---------- */
   .house-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
   @media (max-width:800px){ .house-grid{ grid-template-columns:1fr; } }
-  .house-card{ padding:36px 28px; border-radius:24px; color:var(--sobre-acento); transition:transform .25s ease; }
+  .house-card{ padding:36px 28px; border-radius:24px; color:var(--hueso); transition:transform .25s ease; }
   .house-card:hover{ transform:translateY(-6px); }
   .house-card:nth-child(1){ background:var(--cempasuchil); color:#171512; }
-  .house-card:nth-child(2){ background:var(--chile); }
-  .house-card:nth-child(3){ background:var(--tinta); }
+  .house-card:nth-child(2){ background:var(--chile); color:var(--hueso); }
+  .house-card:nth-child(3){ background:var(--tinta); color:var(--hueso); }
   .house-card h3{ font-size:23px; margin:0 0 10px; }
   .house-card p{ font-size:14px; line-height:1.65; margin:0; opacity:.92; }
   .house-card .tag{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; display:block; opacity:.75; }
 
-  /* ---------- CONDESA ---------- */
-  .itin-tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
-  .itin-tab{ font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; border:2px solid var(--linea); color:#4A453D; }
-  .itin-tab.active{ border-color:var(--acento); background:var(--acento); color:var(--sobre-acento); }
-  .itin-row{ display:grid; grid-template-columns:90px 1fr; gap:24px; padding:20px 0; border-top:2px solid var(--linea); }
-  .itin-row:last-child{ border-bottom:2px solid var(--linea); }
-  .itin-row .time{ font-size:13px; font-weight:700; color:var(--acento); padding-top:3px; }
-  .itin-row h4{ margin:0 0 4px; font-size:19px; font-weight:700; }
-  .itin-row p{ margin:0; font-size:14px; color:#4A453D; line-height:1.5; }
+  /* ---------- LIVING CONDESA — blog en marquesina ----------
+     El contenido real vive en content/posts.json (editado desde
+     /admin vía Decap CMS). El track se pinta dos veces seguidas
+     y la animación recorre exactamente la mitad de su ancho total,
+     así el loop es perfectamente continuo (sin salto al reiniciar). */
+  .marquee-wrap{
+    overflow:hidden; margin-top:8px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .marquee-track{
+    display:flex; gap:22px; width:max-content;
+    animation: marqueeScroll 42s linear infinite;
+  }
+  .marquee-wrap:hover .marquee-track{ animation-play-state:paused; }
+  @keyframes marqueeScroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-  /* ---------- VIBE ---------- */
-  .vibe-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center; }
-  @media (max-width:800px){ .vibe-wrap{ grid-template-columns:1fr; } }
-  .vibe-quote{ font-size:clamp(22px,2.6vw,30px); line-height:1.35; font-weight:600; color:var(--turquesa-2); }
-  .vibe-tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
-  .vibe-tags span{ font-size:12px; font-weight:600; padding:7px 14px; border-radius:999px; background:var(--turquesa); color:var(--hueso); }
+  .post-card{
+    flex:0 0 auto; width:320px; border-radius:22px; overflow:hidden; background:var(--hueso);
+    border:2px solid var(--linea); text-align:left; transition:transform .25s ease, border-color .25s ease;
+  }
+  .post-card:hover{ transform:translateY(-4px); border-color:var(--nopal); }
+  .post-card .post-cover{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; background:var(--linea); }
+  .post-card .post-body{ padding:20px; }
+  .post-card .post-cat{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--nopal); margin-bottom:8px; display:block; }
+  .post-card h3{ font-size:19px; margin:0 0 8px; line-height:1.15; }
+  .post-card p{ font-size:13px; color:#4A453D; line-height:1.55; margin:0 0 10px; }
+  .post-card .post-date{ font-size:11px; color:#8A8072; }
+
+  @media (max-width:640px){ .post-card{ width:250px; } }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none; flex-wrap:wrap; width:100%; }
+    .marquee-wrap{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+  }
+
+  /* ---------- Modal de lectura de post ---------- */
+  .post-modal{
+    position:fixed; inset:0; z-index:200; display:none; align-items:flex-start; justify-content:center;
+    padding:64px 20px; overflow-y:auto; background:rgba(23,21,18,0.78); backdrop-filter:blur(4px);
+  }
+  .post-modal.open{ display:flex; }
+  .post-modal-inner{
+    background:var(--hueso); border-radius:24px; max-width:720px; width:100%; padding:44px; position:relative;
+  }
+  .post-modal-close{
+    position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%;
+    background:var(--tinta); color:var(--hueso); font-size:16px; display:flex; align-items:center; justify-content:center;
+  }
+  .post-modal-body img{ width:100%; border-radius:16px; margin-bottom:24px; aspect-ratio:16/9; object-fit:cover; }
+  .post-modal-body .post-cat{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--nopal); }
+  .post-modal-body h2{ font-size:clamp(26px,3.4vw,38px); margin:10px 0 6px; }
+  .post-modal-body .post-date{ font-size:13px; color:#8A8072; margin-bottom:22px; display:block; }
+  .post-modal-body p{ font-size:15px; line-height:1.7; color:#3A362F; margin:0 0 16px; }
+
 
   /* ---------- BOOK ---------- */
   .book-section{ background:var(--tinta); color:var(--hueso); border-radius:32px; }
@@ -227,7 +265,20 @@
 .house-card{ position:relative; overflow:hidden; }
 .house-photo{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity .4s ease; z-index:0;
+  opacity:0; transition:opacity .45s ease; z-index:0;
 }
-.house-photo.loaded{ opacity:.34; } /* la foto se ve como textura detrás del color, no lo reemplaza */
+/* Por defecto el bloque es color sólido; al hover se revela la foto real
+   por completo, con un velo oscuro para que el texto blanco siga legible. */
+.house-card:hover .house-photo.loaded{ opacity:1; }
+.house-card::after{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:linear-gradient(180deg, rgba(23,21,18,0) 30%, rgba(23,21,18,.65) 100%);
+  opacity:0; transition:opacity .45s ease; pointer-events:none;
+}
+.house-card:hover::after{ opacity:1; }
 .house-card > *:not(img){ position:relative; z-index:1; }
+@media (hover:none){
+  /* dispositivos táctiles: sin hover real, dejamos el bloque de color siempre */
+  .house-card:hover .house-photo.loaded,
+  .house-card:hover::after{ opacity:0; }
+}

@@ -20,8 +20,7 @@
   <nav class="chapters" id="chapterNav">
     <a href="#stay" data-target="stay">Stay</a>
     <a href="#house" data-target="house">The House</a>
-    <a href="#condesa" data-target="condesa">Condesa</a>
-    <a href="#vibe" data-target="vibe">The Vibe</a>
+    <a href="#condesa" data-target="condesa">Living Condesa</a>
   </nav>
   <a href="#book" class="cta-book">Check availability</a>
 </header>
@@ -131,44 +130,35 @@
     </div>
   </div>
 
-  <!-- ================= CONDESA ================= -->
+  <!-- ================= LIVING CONDESA (blog) ================= -->
   <section id="condesa">
     <div class="wrap">
-      <div class="kicker reveal">04 — Condesa</div>
+      <div class="kicker reveal">04 — Living Condesa</div>
       <div class="section-head">
-        <h2 class="reveal">Tu Condesa, curada.</h2>
-        <p class="reveal">No un mapa de Google. Cuatro formas de vivir el barrio, según el momento del día que busques.</p>
+        <h2 class="reveal">El barrio, contado por quien lo vive.</h2>
+        <p class="reveal">No un mapa de Google. Historias cortas sobre Condesa, el arte que aparece en las habitaciones y la gente detrás de ambos — escritas y actualizadas desde nuestro propio backoffice.</p>
       </div>
-      <div class="itin-tabs reveal" id="itinTabs" role="tablist"></div>
-      <div class="reveal" id="itinList"></div>
+    </div>
+
+    <div class="marquee-wrap reveal" id="marqueeWrap" aria-label="Posts de Living Condesa">
+      <div class="marquee-track" id="marqueeTrack"></div>
     </div>
   </section>
 
-  <!-- ================= THE VIBE ================= -->
-  <section id="vibe">
-    <div class="wrap">
-      <div class="kicker reveal">05 — The Vibe</div>
-      <div class="vibe-wrap reveal">
-        <div>
-          <h2 style="font-size:clamp(30px,3.6vw,46px); margin:0 0 20px;">El arte no es la razón por la que vienes. Es la razón por la que te acuerdas.</h2>
-          <p style="font-size:15px; color:#4A453D; line-height:1.7;">Cada habitación tiene al menos una pieza de un artista emergente de Ciudad de México. No hay recorrido guiado ni catálogo — solo una tarjeta junto a la obra.</p>
-          <div class="vibe-tags">
-            <span>Artistas locales</span>
-            <span>Piezas rotativas</span>
-            <span>Sin recorrido guiado</span>
-          </div>
-        </div>
-        <div class="vibe-quote">"Llegué por la ubicación. Me quedé viendo quién había pintado el cuadro de mi cuarto."</div>
-      </div>
+  <!-- Modal de lectura — se llena por JS al hacer clic en un post -->
+  <div class="post-modal" id="postModal" aria-hidden="true">
+    <div class="post-modal-inner">
+      <button class="post-modal-close" id="postModalClose" aria-label="Cerrar">✕</button>
+      <div id="postModalBody"></div>
     </div>
-  </section>
+  </div>
 
   <!-- ================= BOOK ================= -->
   <section id="book">
     <div class="wrap">
       <div class="book-section">
         <div class="wrap">
-          <div class="kicker reveal" style="color:var(--cempasuchil);">06 — Book</div>
+          <div class="kicker reveal" style="color:var(--cempasuchil);">05 — Book</div>
           <h2 class="reveal" style="font-size:clamp(32px,4vw,52px); max-width:16ch;">Reserva tu estancia en Condesa.</h2>
           <p class="reveal" style="max-width:44ch; font-size:15px; opacity:.85;">Disponibilidad en tiempo real. Sin comisiones ocultas, sin letra chica.</p>
           <form class="book-form reveal" id="bookForm">
@@ -199,7 +189,7 @@
     <div class="foot-cols">
       <div>
         <strong style="font-size:12px; color:var(--tinta);">Explorar</strong>
-        <a href="#stay">Stay</a><a href="#house">The House</a><a href="#condesa">Condesa</a><a href="#vibe">The Vibe</a>
+        <a href="#stay">Stay</a><a href="#house">The House</a><a href="#condesa">Living Condesa</a>
       </div>
       <div>
         <strong style="font-size:12px; color:var(--tinta);">Contacto</strong>
@@ -211,5 +201,21 @@
 
 <script src="js/main.js" defer></script>
 <script src="js/hero-reveal.js" defer></script>
+<script src="js/blog.js" defer></script>
+
+<!-- Netlify Identity: solo activo cuando alguien abre un link de invitación
+     al backoffice (/admin) — no afecta a los visitantes normales del sitio. -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', function (user) {
+      if (!user) {
+        window.netlifyIdentity.on('login', function () {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+</script>
 </body>
 </html>

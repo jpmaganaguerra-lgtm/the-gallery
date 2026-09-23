@@ -43,13 +43,23 @@
 
   var W = 0, H = 0;
   var running = false;
+  var loopActive = false; // evita apilar más de un ciclo de rAF a la vez
   var lastX = null, lastY = null;
-  var idlePasses = 0; // cuántos frames sin movimiento reciente
+  var resizeTimer = null;
 
-  function sizeCanvas() {
+  function sizeCanvas(force) {
     var rect = wrap.getBoundingClientRect();
-    W = Math.max(1, Math.round(rect.width));
-    H = Math.max(1, Math.round(rect.height));
+    var newW = Math.max(1, Math.round(rect.width));
+    var newH = Math.max(1, Math.round(rect.height));
+    // En iOS Safari, mostrar/ocultar la barra de direcciones durante el
+    // scroll dispara "resize" aunque el ancho no cambie — solo la altura,
+    // en unos ~50-100px. Redimensionar el canvas ahí lo limpia sin motivo
+    // y se ve como un parpadeo. Si el cambio es mínimo, lo ignoramos.
+    var widthChanged = newW !== W;
+    var heightChanged = Math.abs(newH - H) > 120;
+    if (!force && !widthChanged && !heightChanged && W !== 0) return;
+
+    W = newW; H = newH;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
     canvas.style.width = W + 'px';
@@ -90,8 +100,18 @@
   }
 
   function loop() {
-    if (!running) return;
+    if (!running) { loopActive = false; return; }
     heal();
+    requestAnimationFrame(loop);
+  }
+
+  function startLoop() {
+    // sin este guard, cada vez que el IntersectionObserver vuelve a
+    // reportar "visible" (algo que en mobile pasa muy seguido durante
+    // el scroll) se arrancaba OTRO ciclo de rAF en paralelo — varios
+    // "sanados" corriendo a la vez se veían como parpadeo/glitch.
+    if (loopActive) return;
+    loopActive = true;
     requestAnimationFrame(loop);
   }
 
@@ -116,18 +136,21 @@
   listenTarget.addEventListener('mouseleave', onLeave, { passive: true });
   listenTarget.addEventListener('touchend', onLeave, { passive: true });
 
-  window.addEventListener('resize', sizeCanvas, { passive: true });
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { sizeCanvas(false); }, 180);
+  }, { passive: true });
 
   // solo corre el rAF de "sanado" mientras el hero es visible
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       running = en.isIntersecting;
-      if (running) requestAnimationFrame(loop);
+      if (running) startLoop();
     });
   }, { threshold: 0.05 });
 
   function init() {
-    sizeCanvas();
+    sizeCanvas(true);
     io.observe(wrap);
   }
 
