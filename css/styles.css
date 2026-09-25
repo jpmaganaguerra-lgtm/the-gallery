@@ -112,16 +112,30 @@
   .day-step .num{ display:block; font-size:20px; margin-bottom:6px; }
   .day-step.active{ border-color:var(--acento); color:var(--tinta); transform:translateY(-3px); }
 
-  /* ---------- STAY ---------- */
+  /* ---------- STAY — galería de fotos + banner de color (mismo
+     patrón que "A Day at The Gallery": foto arriba, banner sólido
+     abajo con el número grande) ---------- */
   .room-tabs{ display:flex; gap:8px; margin-bottom:32px; flex-wrap:wrap; }
   .room-tab{ padding:10px 20px; border-radius:999px; border:2px solid var(--tinta); font-size:14px; font-weight:600; transition:background .25s ease, color .25s ease; }
   .room-tab.active{ background:var(--tinta); color:var(--hueso); }
   .room-grid{ display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center; }
   @media (max-width:800px){ .room-grid{ grid-template-columns:1fr; gap:30px; } }
-  .room-visual{ aspect-ratio:4/5; border-radius:28px; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:24px; transition:transform .35s ease; }
-  .room-visual:hover{ transform:scale(1.015); }
-  .room-visual .roomnum{ font-size:clamp(80px,10vw,140px); font-weight:700; color:rgba(244,239,228,0.85); line-height:.8; }
-  .room-visual .caption{ position:absolute; bottom:18px; right:20px; font-size:12px; color:rgba(244,239,228,0.85); }
+
+  .room-gallery{ border-radius:28px; overflow:hidden; }
+  .room-photo-wrap{ position:relative; width:100%; aspect-ratio:4/5; background:var(--linea); }
+  .room-photo-wrap img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .45s ease;
+  }
+  .room-photo-wrap img.active{ opacity:1; }
+  .room-dots{ position:absolute; bottom:16px; left:0; right:0; display:flex; justify-content:center; gap:7px; z-index:2; }
+  .room-dots .dot{ width:7px; height:7px; border-radius:50%; background:rgba(244,239,228,.5); transition:background .25s ease, transform .25s ease; }
+  .room-dots .dot.active{ background:var(--hueso); transform:scale(1.3); }
+
+  .room-banner{ display:flex; justify-content:space-between; align-items:flex-end; padding:22px 26px; }
+  .room-banner .roomnum{ font-size:clamp(56px,7vw,88px); font-weight:700; color:rgba(244,239,228,.9); line-height:.8; }
+  .room-banner .caption{ font-size:12px; color:rgba(244,239,228,.9); padding-bottom:6px; }
+
   .room-name{ font-size:clamp(30px,3.6vw,46px); margin:0 0 6px; }
   .room-tagline{ color:var(--acento); font-size:15px; font-weight:600; margin:0 0 20px; }
   .room-specs{ display:flex; gap:26px; padding:18px 0; border-top:2px solid var(--tinta); border-bottom:2px solid var(--tinta); margin-bottom:22px; flex-wrap:wrap; }
@@ -250,19 +264,6 @@
   .hero-media canvas#heroReveal{ display:none; }
   .hero-media img#heroPhoto{ opacity:.3; }
 }
-
-/* ---------- Fotografía real con fallback al bloque de color ----------
-   Mientras el archivo de la ruta indicada no exista, onerror lo quita
-   del DOM y el fondo de color + número tipográfico quedan visibles.
-   En cuanto subas la foto con el nombre exacto, aparece automáticamente. */
-.room-visual{ position:relative; }
-.room-photo{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity .4s ease;
-}
-.room-photo.loaded{ opacity:1; }
-.room-photo.loaded ~ .roomnum,
-.room-photo.loaded ~ .caption{ display:none; }
 
 .house-card{ position:relative; overflow:hidden; }
 .house-photo{

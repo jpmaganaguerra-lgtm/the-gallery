@@ -19,17 +19,20 @@ const ROOMS = [
     specs:[["32 m²","Superficie"],["2","Huéspedes"],["1","Cama king"]],
     desc:"Un solo espacio bien resuelto: cama, cocina compacta y una zona de estar que se convierte en escritorio.",
     art:"Sobre la cama, una pieza de ", artist:"Renata Off — técnica mixta, 2023.",
-    bg:"var(--cempasuchil)", img:"assets/img/stay/studio/cover.jpg" },
+    bg:"var(--cempasuchil)",
+    images:["assets/img/stay/studio/cover.jpg","assets/img/stay/studio/2.jpg","assets/img/stay/studio/3.jpg","assets/img/stay/studio/4.jpg"] },
   { id:"loft", name:"The Loft", tagline:"For staying a while.", num:"02",
     specs:[["54 m²","Superficie"],["3","Huéspedes"],["Doble altura","Sala"]],
     desc:"Dos niveles, cocina completa y una sala con doble altura que recibe la luz de la tarde.",
     art:"En el descanso de la escalera, una serie fotográfica de ", artist:"Iker Vicente — plata en gelatina, 2022.",
-    bg:"var(--nopal)", img:"assets/img/stay/loft/cover.jpg" },
+    bg:"var(--nopal)",
+    images:["assets/img/stay/loft/cover.jpg","assets/img/stay/loft/2.jpg","assets/img/stay/loft/3.jpg","assets/img/stay/loft/4.jpg"] },
   { id:"corner", name:"The Corner", tagline:"For the view.", num:"03",
     specs:[["40 m²","Superficie"],["2","Huéspedes"],["Esquina","Ventanas"]],
     desc:"Ventanas en dos fachadas, justo sobre la esquina de Amsterdam.",
     art:"Frente a la cama, un óleo de ", artist:"Constanza Rangel — óleo sobre lino, 2024.",
-    bg:"var(--magenta)", img:"assets/img/stay/corner/cover.jpg" }
+    bg:"var(--magenta)",
+    images:["assets/img/stay/corner/cover.jpg","assets/img/stay/corner/2.jpg","assets/img/stay/corner/3.jpg","assets/img/stay/corner/4.jpg"] }
 ];
 
 function el(tag, attrs={}, html=""){ const e=document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); if(html) e.innerHTML=html; return e; }
@@ -110,14 +113,29 @@ ROOMS.forEach((r,i)=>{
 function renderRoom(i, animate){
   const r = ROOMS[i];
   document.querySelectorAll('.room-tab').forEach((t,idx)=>t.classList.toggle('active', idx===i));
+
+  // Las fotos se apilan (crossfade), como en "A Day at The Gallery".
+  // Si un archivo no existe todavía, onerror la quita a ella Y a su
+  // punto — así los puntos siempre reflejan solo las fotos que sí cargaron.
+  const photosHtml = r.images.map((src, idx) => `
+    <img class="room-photo-item${idx===0?' active':''}" src="${src}" alt="${r.name}, The Gallery"
+         data-index="${idx}" loading="${idx===0?'eager':'lazy'}" decoding="async"
+         onerror="this.remove(); const d=document.querySelector('.room-dots .dot[data-index=\\'${idx}\\']'); if(d) d.remove();">
+  `).join('');
+  const dotsHtml = r.images.map((_, idx) => `
+    <button class="dot${idx===0?' active':''}" data-index="${idx}" aria-label="Foto ${idx+1} de ${r.name}"></button>
+  `).join('');
+
   roomContentEl.innerHTML = `
-    <div class="room-visual" style="background:${r.bg};">
-      <img class="room-photo" src="${r.img}" alt="${r.name}, The Gallery"
-           loading="lazy" decoding="async"
-           onload="this.classList.add('loaded')"
-           onerror="this.remove()">
-      <div class="roomnum">${r.num}</div>
-      <span class="caption">${r.name}</span>
+    <div class="room-gallery">
+      <div class="room-photo-wrap">
+        ${photosHtml}
+        <div class="room-dots">${dotsHtml}</div>
+      </div>
+      <div class="room-banner" style="background:${r.bg};">
+        <div class="roomnum">${r.num}</div>
+        <span class="caption">${r.name}</span>
+      </div>
     </div>
     <div>
       <h3 class="room-name">${r.name}</h3>
@@ -127,6 +145,16 @@ function renderRoom(i, animate){
       <p class="room-art">${r.art}<em>${r.artist}</em></p>
       <span class="link-explore">Explorar espacio</span>
     </div>`;
+
+  // clic en un punto cambia la foto activa dentro de la galería de ESTE room
+  roomContentEl.querySelectorAll('.room-dots .dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = dot.dataset.index;
+      roomContentEl.querySelectorAll('.room-photo-item').forEach(img => img.classList.toggle('active', img.dataset.index === idx));
+      roomContentEl.querySelectorAll('.room-dots .dot').forEach(d => d.classList.toggle('active', d === dot));
+    });
+  });
+
   if(animate){ roomContentEl.style.opacity=0; requestAnimationFrame(()=>{ roomContentEl.style.transition='opacity .35s ease'; roomContentEl.style.opacity=1; }); }
 }
 renderRoom(0,false);
