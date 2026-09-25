@@ -26,11 +26,12 @@ en el código (horizontal, 16:10 aprox.):
 - `Have-a-drink-at-The-Gallery-Condesa.webp`
 - `Sleep-at-The-Gallery-Condesa.webp`
 
-## `assets/img/stay/studio/cover.jpg`
-## `assets/img/stay/loft/cover.jpg`
-## `assets/img/stay/corner/cover.jpg`
-Una foto principal por habitación (retrato, 4:5). Es la que se ve en la sección Stay
-al seleccionar cada tab.
+## `assets/img/stay/studio/` — `assets/img/stay/loft/` — `assets/img/stay/corner/`
+Cada habitación ahora es una galería (retrato, 4:5), no una sola foto. Sube hasta 4
+fotos por habitación, con estos nombres exactos dentro de su carpeta:
+- `cover.jpg` (obligatoria, la primera que se ve)
+- `2.jpg`, `3.jpg`, `4.jpg` (opcionales — si no existen, esos puntos de la galería
+  simplemente no aparecen, no rompen nada)
 
 ## `assets/img/house/cafe/cover.jpg`
 ## `assets/img/house/bikes/cover.jpg`
@@ -40,9 +41,15 @@ detrás del color — no reemplazan el bloque, lo enriquecen.
 
 ## `assets/img/blog/`
 Portadas de los posts de "Living Condesa". Se suben desde el backoffice en `/admin`,
-excepto la de la primera guía (SEO), que ya referencié directo:
-- `guia-ruido-condesa.jpg` — horizontal, 16:8 aprox. (foto de una calle arbolada y
-  tranquila de la Condesa, de noche o al atardecer).
+en el campo "Foto de portada" de cada post — **esa misma foto ya es automáticamente
+el hero de la página del artículo** (si el post tiene página propia), no hace falta
+tocar ningún HTML. Los dos artículos actuales ya están conectados a esto:
+- `guia-ruido-condesa.jpg`
+- `donde-hospedarte-condesa.jpg`
+
+(Los nombres de archivo de arriba son solo referencia — si subes la foto desde el
+backoffice con otro nombre, funciona igual: la página siempre usa lo que diga
+`content/posts.json`.)
 
 ## `assets/logo/`
 Logotipo de The Gallery en PNG con fondo transparente, variante oscura y variante clara,
