@@ -85,6 +85,38 @@ table.data-table tr.quiet .db{ color:var(--nopal); }
 table.data-table tr.quiet .db::before{ background:var(--nopal); }
 .table-note{ font-size:12px; color:#8A8072; margin:0 0 40px; }
 
+/* ---------- Variante de tabla NEUTRA — cuando el dato no tiene una
+   lectura de "mejor/peor" tipo semáforo, solo se compara sin juzgar ---------- */
+table.data-table.plain tr td{ background:none !important; }
+table.data-table.plain .db{ color:var(--tinta); }
+table.data-table.plain .db::before{ display:none; }
+
+/* ---------- Zone grid — cada pieza de Living Condesa puede tener su
+   propio dispositivo visual en vez de repetir siempre la tabla.
+   Aquí, cuatro bloques de color sólido (mismo lenguaje que las
+   tarjetas de Stay/House en la home) en vez de una tabla de datos. ---------- */
+.zone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:0 0 16px; }
+@media (max-width:640px){ .zone-grid{ grid-template-columns:1fr; } }
+.zone-card{
+  border-radius:22px; padding:28px 26px; color:var(--hueso); position:relative; overflow:hidden;
+  transition:transform .25s ease;
+}
+.zone-card:hover{ transform:translateY(-4px); }
+.zone-card .zone-num{ font-size:13px; font-weight:700; opacity:.75; margin-bottom:18px; display:block; }
+.zone-card h3{ font-size:22px; margin:0 0 6px; line-height:1.1; }
+.zone-card .zone-vibe{ font-size:13px; font-weight:600; opacity:.85; margin-bottom:16px; }
+.zone-card .zone-best{ font-size:14px; line-height:1.5; opacity:.95; margin-bottom:18px; }
+.zone-card .zone-walk{
+  display:inline-flex; align-items:baseline; gap:6px; font-size:12px; font-weight:600;
+  background:rgba(0,0,0,.18); padding:6px 12px; border-radius:999px;
+}
+.zone-card .zone-walk strong{ font-size:15px; color:inherit; }
+.zone-card.z-quiet{ background:var(--nopal); }
+.zone-card.z-mid{ background:var(--cempasuchil); color:#171512; }
+.zone-card.z-mid .zone-walk{ background:rgba(0,0,0,.10); }
+.zone-card.z-social{ background:var(--magenta); }
+.zone-card.z-loud{ background:var(--chile); }
+
 /* ---------- Stat destacado — el dato más citable del artículo,
    tratado como pieza tipográfica grande (mismo lenguaje que los
    números de habitación en Stay), no como texto de más. ---------- */

@@ -202,13 +202,15 @@
   /* ---------- BOOK ---------- */
   .book-section{ background:var(--tinta); color:var(--hueso); border-radius:32px; }
   .book-section .wrap{ padding-top:76px; padding-bottom:76px; }
-  .book-form{ display:grid; grid-template-columns:repeat(4,1fr) auto; gap:2px; background:rgba(244,239,228,0.16); margin-top:36px; border-radius:20px; overflow:hidden; }
+  .book-form{ display:grid; grid-template-columns:repeat(3,1fr) auto; gap:2px; background:rgba(244,239,228,0.16); margin-top:36px; border-radius:20px; overflow:hidden; }
   @media (max-width:800px){ .book-form{ grid-template-columns:1fr 1fr; } }
   .book-field{ background:#211E19; padding:18px 20px; }
   .book-field label{ display:block; font-size:11px; color:#A79C8A; margin-bottom:6px; font-weight:600; }
   .book-field input, .book-field select{ background:transparent; border:none; color:var(--hueso); font-size:15px; width:100%; font-family:inherit; }
   .book-submit{ background:var(--magenta); color:var(--hueso); padding:18px 32px; font-size:14px; font-weight:700; }
   @media (max-width:800px){ .book-submit{ grid-column:1/-1; border-radius:0 0 20px 20px; } }
+  .book-note{ font-size:12px; color:#8A8072; margin-top:14px; min-height:16px; }
+  .book-note.error{ color:var(--chile); font-weight:600; }
 
   footer{ padding:60px 0 40px; font-size:13px; color:#4A453D; }
   .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; }
