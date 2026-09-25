@@ -167,12 +167,12 @@
             <div class="book-field"><label for="guests">Huéspedes</label>
               <select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
             </div>
-            <div class="book-field"><label for="roomSelect">Espacio</label>
-              <select id="roomSelect"><option value="studio">The Studio</option><option value="loft">The Loft</option><option value="corner">The Corner</option></select>
-            </div>
+            <!-- "Espacio" se quitó del formulario: el motor de Octorate no soporta
+                 preseleccionar tipo de habitación por URL en este método — el
+                 huésped elige entre los disponibles ya dentro del motor. -->
             <button type="submit" class="book-submit">Ver disponibilidad</button>
           </form>
-          <p id="bookNote" style="font-size:12px; color:#8A8072; margin-top:14px; display:none;">Selecciona fechas y espacio para consultar disponibilidad real.</p>
+          <p id="bookNote" class="book-note" role="status"></p>
         </div>
       </div>
     </div>
