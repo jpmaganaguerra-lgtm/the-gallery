@@ -19,14 +19,17 @@
   var slug = document.body.getAttribute('data-post-slug');
   if (!img || !slug) return;
 
-  fetch('../content/posts.json')
+  // La página puede vivir en /living-condesa/ o /living-condesa/en/: la raíz viene de data-root.
+  var root = document.body.getAttribute('data-root') || '../';
+
+  fetch(root + 'content/posts.json')
     .then(function (r) { if (!r.ok) throw new Error('posts.json not found'); return r.json(); })
     .then(function (data) {
       var post = (data.posts || []).find(function (p) { return p.slug === slug; });
       if (post && post.cover) {
         // Las rutas en posts.json son relativas a la raíz del sitio;
         // esta página vive un nivel abajo, en /living-condesa/.
-        img.src = '../' + post.cover;
+        img.src = root + post.cover;
         img.onerror = function () { img.style.display = 'none'; };
       }
     })

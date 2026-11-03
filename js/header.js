@@ -13,24 +13,28 @@
   /* ---------- Configuración (un solo lugar para la key de Octorate) ---------- */
   var CFG = window.GALLERY_CONFIG = window.GALLERY_CONFIG || {
     octorateSiteKey: 'octosite362352',
-    octorateLang: 'es',
+    octorateLang: '',            // '' = el idioma activo del sitio; o 'en' / 'es' para fijarlo
     maxGuests: 4,
-    contactEmail: 'hola@thegallery.mx',
-    address: 'Francisco Márquez 149, Condesa, Ciudad de México.'
+    contactEmail: 'hola@thegallery.mx'
   };
 
   /* En el home los links son "#stay"; en los artículos apuntan a ../index.html#stay */
   var isHome = document.body.hasAttribute('data-home');
-  var base = isHome ? '' : '../index.html';
+  var root = document.body.getAttribute('data-root') || '../';
+  var base = isHome ? '' : root + 'index.html';
+  var L = function (k, v) { return I18N.t(k, v); };
 
-  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  var DIAS = ['L','M','M','J','V','S','D'];
+  var MESES = {
+    es: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December']
+  };
+  var DIAS = { es: ['L','M','M','J','V','S','D'], en: ['S','M','T','W','T','F','S'] };   // EN: semana empieza en domingo
 
   /* ---------- Utilidades de fecha (SIEMPRE en hora local, no UTC) ---------- */
   function pad(n) { return String(n).padStart(2, '0'); }
   function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function octDate(d) { return pad(d.getDate()) + '%2F' + pad(d.getMonth() + 1) + '%2F' + d.getFullYear(); }
-  function short(d) { return d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3); }
+  function short(d) { var m = MESES[I18N.lang][d.getMonth()].slice(0, 3); return I18N.lang === 'es' ? d.getDate() + ' ' + m.toLowerCase() : m + ' ' + d.getDate(); }
   var TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
   function nights() { return S.start && S.end ? Math.round((S.end - S.start) / 864e5) : 0; }
 
@@ -46,26 +50,32 @@
      ============================================================ */
   var menu = document.createElement('div');
   menu.className = 'menu'; menu.id = 'siteMenu'; menu.setAttribute('aria-hidden', 'true'); menu.inert = true;
-  menu.innerHTML =
-    '<nav class="menu-inner wrap" aria-label="Menú principal"><ul>' +
-      '<li><a class="menu-link" style="--i:0" href="' + base + '#stay" data-target="stay"><span class="menu-num">01</span>Quédate</a></li>' +
-      '<li><a class="menu-link" style="--i:1" href="' + base + '#house" data-target="house"><span class="menu-num">02</span>Tu casa</a></li>' +
-      '<li><a class="menu-link" style="--i:2" href="' + base + '#condesa" data-target="condesa"><span class="menu-num">03</span>Viviendo La Condesa</a></li>' +
-      '<li><a class="menu-link" style="--i:3" href="' + base + '#book" data-reserve><span class="menu-num">04</span>Reserva</a></li>' +
-    '</ul><div class="menu-foot"><span>' + CFG.address + '</span><a href="mailto:' + CFG.contactEmail + '">' + CFG.contactEmail + '</a></div></nav>';
+  function buildMenu() {
+    menu.innerHTML =
+      '<nav class="menu-inner wrap" aria-label="' + L('menu.aria') + '"><ul>' +
+        '<li><a class="menu-link" style="--i:0" href="' + base + '#stay" data-target="stay"><span class="menu-num">01</span>' + L('menu.stay') + '</a></li>' +
+        '<li><a class="menu-link" style="--i:1" href="' + base + '#house" data-target="house"><span class="menu-num">02</span>' + L('menu.house') + '</a></li>' +
+        '<li><a class="menu-link" style="--i:2" href="' + base + '#condesa" data-target="condesa"><span class="menu-num">03</span>' + L('menu.condesa') + '</a></li>' +
+        '<li><a class="menu-link" style="--i:3" href="' + base + '#book" data-reserve><span class="menu-num">04</span>' + L('menu.book') + '</a></li>' +
+      '</ul><div class="menu-foot"><span>' + L('foot.addr') + '</span><a href="mailto:' + CFG.contactEmail + '">' + CFG.contactEmail + '</a></div></nav>';
+    var cur = document.body.getAttribute('data-chapter');
+    var act = menu.querySelector('.menu-link[data-target="' + cur + '"]');
+    if (act && isHome) act.classList.add('active');
+  }
+  buildMenu();
   document.body.appendChild(menu);
 
   var burger = document.getElementById('menuToggle');
   function openMenu() {
     closeDrawer();
     menu.classList.add('on'); menu.inert = false; menu.setAttribute('aria-hidden', 'false');
-    burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Cerrar menú');
+    burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', L('burger.close'));
     syncLock();
   }
   function closeMenu() {
     if (!menu.classList.contains('on')) return;
     menu.classList.remove('on'); menu.inert = true; menu.setAttribute('aria-hidden', 'true');
-    burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Abrir menú');
+    burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', L('burger.open'));
     syncLock();
   }
   if (burger) burger.addEventListener('click', function () { menu.classList.contains('on') ? closeMenu() : openMenu(); });
@@ -83,31 +93,32 @@
   drw.className = 'drw'; drw.id = 'bookingDrawer'; drw.inert = true;
   drw.setAttribute('role', 'dialog'); drw.setAttribute('aria-modal', 'true');
   drw.setAttribute('aria-labelledby', 'drwTitle'); drw.setAttribute('aria-hidden', 'true');
-  drw.innerHTML =
-    '<div class="drw-head"><h2 id="drwTitle">Tu estancia</h2><button type="button" class="drw-close" data-close>Cerrar</button></div>' +
-    '<div class="drw-body">' +
-      '<div class="dates"><div data-slot="in"><small>Llegada</small><b data-v="in"></b></div><div data-slot="out"><small>Salida</small><b data-v="out"></b></div></div>' +
-      '<div data-cal></div>' +
-      '<div class="guests"><div><small>Huéspedes</small><b data-v="g"></b></div>' +
-        '<div class="stepper"><button type="button" data-g="-1" aria-label="Quitar un huésped">−</button><span data-v="gn"></span><button type="button" data-g="1" aria-label="Agregar un huésped">+</button></div></div>' +
-      '<p class="guests-help">¿Más de ' + CFG.maxGuests + '? <a href="mailto:' + CFG.contactEmail + '">Escríbenos</a>.</p>' +
-    '</div>' +
-    '<div class="drw-foot"><button type="button" class="drw-go" data-go><span>Ver disponibilidad</span></button>' +
-      '<p class="drw-msg">Verás disponibilidad y tarifas en el motor de reservas.</p></div>';
+  function buildDrawer() {
+    drw.innerHTML =
+      '<div class="drw-head"><h2 id="drwTitle">' + L('drw.title') + '</h2><button type="button" class="drw-close" data-close>' + L('drw.close') + '</button></div>' +
+      '<div class="drw-body">' +
+        '<div class="dates"><div data-slot="in"><small>' + L('drw.in') + '</small><b data-v="in"></b></div><div data-slot="out"><small>' + L('drw.out') + '</small><b data-v="out"></b></div></div>' +
+        '<div data-cal></div>' +
+        '<div class="guests"><div><small>' + L('drw.guests') + '</small><b data-v="g"></b></div>' +
+          '<div class="stepper"><button type="button" data-g="-1" aria-label="' + L('drw.remG') + '">−</button><span data-v="gn"></span><button type="button" data-g="1" aria-label="' + L('drw.addG') + '">+</button></div></div>' +
+        '<p class="guests-help">' + L('drw.more', { n: CFG.maxGuests }) + ' <a href="mailto:' + CFG.contactEmail + '">' + L('drw.write') + '</a>.</p>' +
+      '</div>' +
+      '<div class="drw-foot"><button type="button" class="drw-go" data-go><span>' + L('drw.go') + '</span></button>' +
+        '<p class="drw-msg">' + L('drw.msg') + '</p></div>';
+  }
+  buildDrawer();
   document.body.appendChild(scrim);
   document.body.appendChild(drw);
 
-  var calHost = drw.querySelector('[data-cal]');
-  var goBtn = drw.querySelector('[data-go]');
   var lastFocus = null;
 
   function calHTML() {
     var y = S.view.getFullYear(), m = S.view.getMonth();
     var atMin = y === TODAY.getFullYear() && m === TODAY.getMonth();
-    var h = '<div class="cal-head"><button type="button" data-nav="-1" aria-label="Mes anterior"' + (atMin ? ' disabled' : '') + '>←</button>' +
-            '<span>' + MESES[m] + ' ' + y + '</span><button type="button" data-nav="1" aria-label="Mes siguiente">→</button></div><div class="cal-grid">';
-    DIAS.forEach(function (d) { h += '<span class="wd">' + d + '</span>'; });
-    var off = (new Date(y, m, 1).getDay() + 6) % 7;            // semana empieza en lunes
+    var h = '<div class="cal-head"><button type="button" data-nav="-1" aria-label="' + L('drw.prev') + '"' + (atMin ? ' disabled' : '') + '>←</button>' +
+            '<span>' + MESES[I18N.lang][m] + ' ' + y + '</span><button type="button" data-nav="1" aria-label="' + L('drw.next') + '">→</button></div><div class="cal-grid">';
+    DIAS[I18N.lang].forEach(function (d) { h += '<span class="wd">' + d + '</span>'; });
+    var fd = new Date(y, m, 1).getDay(), off = I18N.lang === 'es' ? (fd + 6) % 7 : fd;   // ES: lunes · EN: domingo
     for (var i = 0; i < off; i++) h += '<span></span>';
     var dim = new Date(y, m + 1, 0).getDate();
     for (var n = 1; n <= dim; n++) {
@@ -119,22 +130,22 @@
       if (S.start && S.end && d > S.start && d < S.end) c += ' r';
       h += '<button type="button" class="' + c + '" data-d="' + iso(d) + '"' + (d < TODAY ? ' disabled' : '') + '>' + n + '</button>';
     }
-    var info = S.start ? (S.end ? nights() + (nights() === 1 ? ' noche' : ' noches') : 'Elige la salida') : 'Elige la llegada';
-    return h + '</div><p class="cal-info">' + info + (S.start ? '<button type="button" data-clear>Borrar</button>' : '') + '</p>';
+    var info = S.start ? (S.end ? nights() + ' ' + L(nights() === 1 ? 'drw.night' : 'drw.nights') : L('drw.pickOut')) : L('drw.pickIn');
+    return h + '</div><p class="cal-info">' + info + (S.start ? '<button type="button" data-clear>' + L('drw.clear') + '</button>' : '') + '</p>';
   }
 
   function render() {
     var vIn = drw.querySelector('[data-v="in"]'), vOut = drw.querySelector('[data-v="out"]');
-    vIn.textContent = S.start ? short(S.start) : 'Elige fecha'; vIn.className = S.start ? '' : 'ph';
-    vOut.textContent = S.end ? short(S.end) : 'Elige fecha'; vOut.className = S.end ? '' : 'ph';
+    vIn.textContent = S.start ? short(S.start) : L('drw.pick'); vIn.className = S.start ? '' : 'ph';
+    vOut.textContent = S.end ? short(S.end) : L('drw.pick'); vOut.className = S.end ? '' : 'ph';
     drw.querySelector('[data-slot="in"]').classList.toggle('next', !S.start);
     drw.querySelector('[data-slot="out"]').classList.toggle('next', !!S.start && !S.end);
-    drw.querySelector('[data-v="g"]').textContent = S.guests + (S.guests === 1 ? ' huésped' : ' huéspedes');
+    drw.querySelector('[data-v="g"]').textContent = S.guests + ' ' + L(S.guests === 1 ? 'drw.guest1' : 'drw.guestN');
     drw.querySelector('[data-v="gn"]').textContent = S.guests;
     drw.querySelector('[data-g="-1"]').disabled = S.guests <= 1;
     drw.querySelector('[data-g="1"]').disabled = S.guests >= CFG.maxGuests;
-    calHost.innerHTML = calHTML();
-    goBtn.disabled = !(S.start && S.end);
+    drw.querySelector('[data-cal]').innerHTML = calHTML();
+    drw.querySelector('[data-go]').disabled = !(S.start && S.end);
   }
 
   function pickDay(s) {
@@ -172,7 +183,7 @@
     if (t.closest('[data-go]') && S.start && S.end) {
       window.location.href = 'https://book.octorate.com/octobook/site/reservation/result.xhtml'
         + '?siteKey=' + encodeURIComponent(CFG.octorateSiteKey)
-        + '&lang=' + CFG.octorateLang
+        + '&lang=' + (CFG.octorateLang || I18N.lang)
         + '&ota=false'
         + '&checkin=' + octDate(S.start)
         + '&checkout=' + octDate(S.end)
@@ -180,6 +191,11 @@
     }
   });
   scrim.addEventListener('click', closeDrawer);
+
+  I18N.onChange(function () {
+    buildMenu(); buildDrawer(); render();
+    burger.setAttribute('aria-label', L(menu.classList.contains('on') ? 'burger.close' : 'burger.open'));
+  });
 
   /* Cualquier [data-reserve] abre el panel (el href queda como respaldo sin JS) */
   document.addEventListener('click', function (e) {

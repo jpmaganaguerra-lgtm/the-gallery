@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-lang-fixed>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,9 @@
 <title>Guía de ruido en la Condesa: las calles más tranquilas para dormir bien | The Gallery</title>
 <meta name="description" content="Comparamos el ruido nocturno de la Condesa calle por calle — con niveles en decibelios — para que elijas dónde hospedarte si lo que buscas es dormir bien.">
 <link rel="canonical" href="https://the-gallery-condesa.netlify.app/living-condesa/guia-ruido-condesa.html">
+<link rel="alternate" hreflang="es" href="https://the-gallery-condesa.netlify.app/living-condesa/guia-ruido-condesa.html">
+<link rel="alternate" hreflang="en" href="https://the-gallery-condesa.netlify.app/living-condesa/en/condesa-noise-guide.html">
+<link rel="alternate" hreflang="x-default" href="https://the-gallery-condesa.netlify.app/living-condesa/en/condesa-noise-guide.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guía de ruido en la Condesa: las calles más tranquilas para dormir bien">
@@ -44,14 +47,19 @@
 <body class="no-js" data-chapter="condesa" data-post-slug="guia-ruido-condesa">
 
 <header class="site scrolled" id="siteHeader">
-  <button type="button" class="burger" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="siteMenu">
-    <span class="burger-box"><i></i><i></i></span>
-  </button>
+  <div class="hd-left">
+    <button type="button" class="burger" id="menuToggle" aria-label="Abrir menú" data-i18n-attr="aria-label:burger.open" aria-expanded="false" aria-controls="siteMenu">
+      <span class="burger-box"><i></i><i></i></span>
+    </button>
+    <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.aria">
+      <button type="button" data-lang="en" aria-pressed="false">en</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="true">es</button>
+    </div>
+  </div>
   <a href="../index.html" class="logotype">
     <img src="../assets/logo/logo-color-the-gallery.webp" alt="The Gallery" class="logo-img"
          onerror="this.outerHTML='The Gallery'">
   </a>
-  <a href="../index.html#book" class="cta-book" data-reserve><span>Reserva aquí</span></a>
+  <a href="../index.html#book" class="cta-book" data-reserve><span data-i18n="hdr.book">Reserva aquí</span></a>
 </header>
 
 <main>
@@ -139,22 +147,24 @@
   <div class="wrap foot-grid">
     <div>
       <div class="logotype" style="margin-bottom:8px;">The Gallery</div>
-      <p style="margin:0; max-width:28ch;">Francisco Márquez 149, Condesa, Ciudad de México.</p>
+      <p style="margin:0; max-width:28ch;" data-i18n="foot.addr">Francisco Márquez 149, Condesa, Ciudad de México.</p>
     </div>
     <div class="foot-cols">
       <div>
-        <strong style="font-size:12px; color:var(--tinta);">Explorar</strong>
-        <a href="../index.html#stay">Quédate</a><a href="../index.html#house">Tu casa lejos de casa</a><a href="../index.html#condesa">Viviendo La Condesa</a>
+        <strong style="font-size:12px; color:var(--tinta);" data-i18n="foot.explore">Explorar</strong>
+        <a href="../index.html#stay" data-i18n="foot.stay">Quédate</a><a href="../index.html#house" data-i18n="foot.house">Tu casa lejos de casa</a><a href="../index.html#condesa" data-i18n="foot.condesa">Viviendo La Condesa</a>
       </div>
       <div>
-        <strong style="font-size:12px; color:var(--tinta);">Contacto</strong>
-        <a href="mailto:hola@thegallery.mx">hola@thegallery.mx</a><a href="../index.html#book" data-reserve>Reservar</a>
+        <strong style="font-size:12px; color:var(--tinta);" data-i18n="foot.contact">Contacto</strong>
+        <a href="mailto:hola@thegallery.mx">hola@thegallery.mx</a><a href="../index.html#book" data-reserve data-i18n="foot.book">Reservar</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>document.documentElement.classList.remove('no-js');</script>
+<script src="../js/strings.js"></script>
+<script src="../js/i18n.js"></script>
 <script src="../js/header.js" defer></script>
 <script src="../js/article-hero.js" defer></script>
 </body>

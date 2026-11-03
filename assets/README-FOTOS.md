@@ -28,10 +28,11 @@ en el código (horizontal, 16:10 aprox.):
 
 ## `assets/img/stay/studio/` — `assets/img/stay/loft/` — `assets/img/stay/corner/`
 Cada habitación ahora es una galería (retrato, 4:5), no una sola foto. Sube hasta 4
-fotos por habitación, con estos nombres exactos dentro de su carpeta:
-- `cover.jpg` (obligatoria, la primera que se ve)
-- `2.jpg`, `3.jpg`, `4.jpg` (opcionales — si no existen, esos puntos de la galería
-  simplemente no aparecen, no rompen nada)
+fotos por habitación, con estos nombres exactos dentro de su carpeta (`.jpg` o
+`.webp` — cualquiera de los dos funciona, no hace falta avisar cuál usaste):
+- `cover.jpg` / `cover.webp` (obligatoria, la primera que se ve)
+- `2.jpg` / `2.webp`, `3.jpg` / `3.webp`, `4.jpg` / `4.webp` (opcionales — si no
+  existen, esos puntos de la galería simplemente no aparecen, no rompen nada)
 
 ## `assets/img/house/cafe/cover.jpg`
 ## `assets/img/house/bikes/cover.jpg`

@@ -1,37 +1,23 @@
 
+// Los textos (EN/ES) viven en js/strings.js; aquí solo claves, fotos y colores.
+const T = (k, v) => I18N.t(k, v);
+
 const DAY_MOMENTS = [
-  { label:"Despierta", tag:"Luz natural entrando por ventanas altas. Sin alarmas.", chapter:"stay",
-    img:"assets/img/day/Wake-up-at-The-Gallery-Condesa.webp" },
-  { label:"Un cafecito", tag:"Bajas al café. El barista ya sabe cómo te gusta.", chapter:"house",
-    img:"assets/img/day/Make-Coffee-at-The-Gallery-Condesa.webp" },
-  { label:"Hora de salir", tag:"Tomas una bici. Parque México a cinco minutos.", chapter:"house",
-    img:"assets/img/day/Get-Out-at-The-Gallery-Condesa.webp" },
-  { label:"Regresa", tag:"Trabajas una hora en la mesa larga de la sala común.", chapter:"house",
-    img:"assets/img/day/Come-Back-to-The-Gallery-Condesa.webp" },
-  { label:"¿Algo de tomar?", tag:"Mezcal en una terraza a la vuelta, antes de que anochezca.", chapter:"condesa",
-    img:"assets/img/day/Have-a-drink-at-The-Gallery-Condesa.webp" },
-  { label:"Descansa", tag:"De vuelta al cuarto. Mañana se repite, distinto.", chapter:"stay",
-    img:"assets/img/day/Sleep-at-The-Gallery-Condesa.webp" }
+  { k:1, chapter:"stay",    img:"assets/img/day/Wake-up-at-The-Gallery-Condesa.webp" },
+  { k:2, chapter:"house",   img:"assets/img/day/Make-Coffee-at-The-Gallery-Condesa.webp" },
+  { k:3, chapter:"house",   img:"assets/img/day/Get-Out-at-The-Gallery-Condesa.webp" },
+  { k:4, chapter:"house",   img:"assets/img/day/Come-Back-to-The-Gallery-Condesa.webp" },
+  { k:5, chapter:"condesa", img:"assets/img/day/Have-a-drink-at-The-Gallery-Condesa.webp" },
+  { k:6, chapter:"stay",    img:"assets/img/day/Sleep-at-The-Gallery-Condesa.webp" }
 ];
+const momentLabel = m => T('day.' + m.k + '.label');
 
 const ROOMS = [
-  { id:"studio", name:"Estudio", tagline:"Para mañanas lentas.", num:"01",
-    specs:[["32 m²","Superficie"],["2","Huéspedes"],["1","Cama king"]],
-    desc:"Un solo espacio bien resuelto: cama, cocina compacta y una zona de estar que se convierte en escritorio.",
-    art:"Sobre la cama, una pieza de ", artist:"Renata Off — técnica mixta, 2023.",
-    bg:"var(--cempasuchil)",
+  { id:"studio", num:"01", bg:"var(--cempasuchil)",
     images:["assets/img/stay/studio/cover","assets/img/stay/studio/2","assets/img/stay/studio/3","assets/img/stay/studio/4"] },
-  { id:"loft", name:"Loft", tagline:"Para quedarte más.", num:"02",
-    specs:[["54 m²","Superficie"],["3","Huéspedes"],["Doble altura","Sala"]],
-    desc:"Dos niveles, cocina completa y una sala con doble altura que recibe la luz de la tarde.",
-    art:"En el descanso de la escalera, una serie fotográfica de ", artist:"Iker Vicente — plata en gelatina, 2022.",
-    bg:"var(--nopal)",
+  { id:"loft", num:"02", bg:"var(--nopal)",
     images:["assets/img/stay/loft/cover","assets/img/stay/loft/2","assets/img/stay/loft/3","assets/img/stay/loft/4"] },
-  { id:"corner", name:"Esquinado", tagline:"Descubre la quietud.", num:"03",
-    specs:[["40 m²","Superficie"],["2","Huéspedes"],["Esquina","Ventanas"]],
-    desc:"Ventanas en dos fachadas, justo en la esquina.",
-    art:"Frente a la cama, un óleo de ", artist:"Constanza Rangel — óleo sobre lino, 2024.",
-    bg:"var(--magenta)",
+  { id:"corner", num:"03", bg:"var(--magenta)",
     images:["assets/img/stay/corner/cover","assets/img/stay/corner/2","assets/img/stay/corner/3","assets/img/stay/corner/4"] }
 ];
 
@@ -82,7 +68,7 @@ DAY_MOMENTS.forEach((m,i)=>{
   const img = el('img', {
     class: 'day-photo' + (i===0 ? ' active' : ''),
     src: m.img,
-    alt: `${m.label} — The Gallery Condesa`,
+    alt: T('day.alt', {label: momentLabel(m)}),
     loading: i===0 ? 'eager' : 'lazy',
     decoding: 'async',
     'data-index': i,
@@ -92,7 +78,7 @@ DAY_MOMENTS.forEach((m,i)=>{
 });
 
 DAY_MOMENTS.forEach((m,i)=>{
-  const step = el('button', {class:'day-step'+(i===0?' active':''), role:'tab', 'aria-selected': i===0?'true':'false', 'data-index':i}, `<span class="num">0${i+1}</span>${m.label}`);
+  const step = el('button', {class:'day-step'+(i===0?' active':''), role:'tab', 'aria-selected': i===0?'true':'false', 'data-index':i}, `<span class="num">0${i+1}</span>${momentLabel(m)}`);
   // "Rollover": el cursor sobre la pestaña cambia la foto. click y focus
   // quedan como respaldo para touch/teclado, donde no existe hover.
   step.addEventListener('mouseenter', ()=>setMoment(i,true));
@@ -104,7 +90,7 @@ DAY_MOMENTS.forEach((m,i)=>{
 const CHAPTER_BANNER = { stay:'var(--magenta)', house:'var(--cempasuchil)', condesa:'var(--nopal)' };
 function setMoment(i, user){
   activeMoment=i; const m=DAY_MOMENTS[i];
-  momentTitle.textContent=m.label; momentTag.textContent=m.tag;
+  momentTitle.textContent=momentLabel(m); momentTag.textContent=T('day.'+m.k+'.tag');
   dayBanner.style.background = CHAPTER_BANNER[m.chapter] || CHAPTER_BANNER.stay;
   document.querySelectorAll('.day-photo').forEach((img,idx)=>img.classList.toggle('active', idx===i));
   document.querySelectorAll('.day-step').forEach((el,idx)=>{ el.classList.toggle('active', idx===i); el.setAttribute('aria-selected', idx===i?'true':'false'); });
@@ -120,24 +106,28 @@ dayRail.addEventListener('keydown', e=>{
 const roomTabsEl = document.getElementById('roomTabs');
 const roomContentEl = document.getElementById('roomContent');
 ROOMS.forEach((r,i)=>{
-  const tab = el('button', {class:'room-tab'+(i===0?' active':''), 'data-id':r.id}, r.name);
+  const tab = el('button', {class:'room-tab'+(i===0?' active':''), 'data-id':r.id}, T('room.'+r.id+'.name'));
   tab.addEventListener('click', ()=>renderRoom(i,true));
   roomTabsEl.appendChild(tab);
 });
+let currentRoom = 0;
 function renderRoom(i, animate){
+  currentRoom = i;
   const r = ROOMS[i];
+  const rn = T('room.'+r.id+'.name');
+  const specs = [1,2,3].map(x => [T('room.'+r.id+'.s'+x+'v'), T('room.'+r.id+'.s'+x+'l')]);
   document.querySelectorAll('.room-tab').forEach((t,idx)=>t.classList.toggle('active', idx===i));
 
   // Las fotos se apilan (crossfade), como en "A Day at The Gallery".
   // Si un archivo no existe todavía, onerror la quita a ella Y a su
   // punto — así los puntos siempre reflejan solo las fotos que sí cargaron.
   const photosHtml = r.images.map((base, idx) => `
-    <img class="room-photo-item${idx===0?' active':''}" src="${base}.jpg" alt="${r.name}, The Gallery"
+    <img class="room-photo-item${idx===0?' active':''}" src="${base}.jpg" alt="${T('stay.photoAlt',{name:rn})}"
          data-index="${idx}" loading="${idx===0?'eager':'lazy'}" decoding="async"
          onerror="handleRoomPhotoError(this, ${idx})">
   `).join('');
   const dotsHtml = r.images.map((_, idx) => `
-    <button class="dot${idx===0?' active':''}" data-index="${idx}" aria-label="Foto ${idx+1} de ${r.name}"></button>
+    <button class="dot${idx===0?' active':''}" data-index="${idx}" aria-label="${T('stay.dotAria',{n:idx+1,name:rn})}"></button>
   `).join('');
 
   roomContentEl.innerHTML = `
@@ -148,15 +138,15 @@ function renderRoom(i, animate){
       </div>
       <div class="room-banner" style="background:${r.bg};">
         <div class="roomnum">${r.num}</div>
-        <span class="caption">${r.name}</span>
+        <span class="caption">${rn}</span>
       </div>
     </div>
     <div>
-      <h3 class="room-name">${r.name}</h3>
-      <p class="room-tagline">${r.tagline}</p>
-      <div class="room-specs">${r.specs.map(([v,l])=>`<div><strong>${v}</strong>${l}</div>`).join('')}</div>
-      <p class="room-desc">${r.desc}</p>
-      <span class="link-explore">Explorar espacio</span>
+      <h3 class="room-name">${rn}</h3>
+      <p class="room-tagline">${T('room.'+r.id+'.tag')}</p>
+      <div class="room-specs">${specs.map(([v,l])=>`<div><strong>${v}</strong>${l}</div>`).join('')}</div>
+      <p class="room-desc">${T('room.'+r.id+'.desc')}</p>
+      <span class="link-explore">${T('stay.btn')}</span>
     </div>`;
 
   // clic en un punto cambia la foto activa dentro de la galería de ESTE room
@@ -171,6 +161,15 @@ function renderRoom(i, animate){
   if(animate){ roomContentEl.style.opacity=0; requestAnimationFrame(()=>{ roomContentEl.style.transition='opacity .35s ease'; roomContentEl.style.opacity=1; }); }
 }
 renderRoom(0,false);
+
+// Cambio de idioma: se reescriben momentos del día, pestañas y la habitación activa.
+I18N.onChange(() => {
+  document.querySelectorAll('.day-photo').forEach(img => { img.alt = T('day.alt', {label: momentLabel(DAY_MOMENTS[+img.dataset.index])}); });
+  document.querySelectorAll('.day-step').forEach(b => { b.lastChild.nodeValue = momentLabel(DAY_MOMENTS[+b.dataset.index]); });
+  setMoment(activeMoment, false);
+  document.querySelectorAll('.room-tab').forEach((b,i) => { b.textContent = T('room.'+ROOMS[i].id+'.name'); });
+  renderRoom(currentRoom, false);
+});
 
 /* ============================================================
    BOOKING — conecta con el motor de reservas de Octorate.
@@ -230,19 +229,19 @@ renderRoom(0,false);
     var guests = guestsEl ? guestsEl.value : '2';
 
     if (!checkin || !checkout) {
-      showNote('Selecciona fecha de llegada y de salida.', true);
+      showNote(I18N.t('book.err1'), true);
       return;
     }
     if (checkout <= checkin) {
-      showNote('La salida debe ser después de la llegada.', true);
+      showNote(I18N.t('book.err2'), true);
       return;
     }
 
-    showNote('Abriendo disponibilidad en Octorate…', false);
+    showNote(I18N.t('book.ok'), false);
 
     var url = 'https://book.octorate.com/octobook/site/reservation/result.xhtml'
       + '?siteKey=' + encodeURIComponent(OCTORATE_SITE_KEY)
-      + '&lang=' + OCTORATE_LANG
+      + '&lang=' + (CFG.octorateLang || I18N.lang)
       + '&ota=false'
       + '&checkin=' + toOctorateDate(checkin)
       + '&checkout=' + toOctorateDate(checkout)

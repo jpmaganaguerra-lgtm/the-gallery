@@ -43,3 +43,12 @@ collections:
                 widget: "text"
                 required: false
                 hint: "Solo se usa si 'Página propia' está vacío. Separa los párrafos con una línea en blanco."
+
+              # ---------- Versión en inglés (opcional) ----------
+              # El sitio empieza en inglés. Si un campo en inglés está vacío,
+              # el sitio muestra el texto en español en su lugar.
+              - { label: "Título (EN)", name: "title_en", widget: "string", required: false }
+              - { label: "Categoría (EN)", name: "category_en", widget: "string", required: false, hint: "Ej. Guide, Morning, Nightlife, Bikes, Art, Food, Community" }
+              - { label: "Extracto (EN)", name: "excerpt_en", widget: "text", required: false }
+              - { label: "Página propia (EN) — opcional", name: "url_en", widget: "string", required: false, hint: "Ej. living-condesa/en/nombre.html — la versión en inglés de la página del post." }
+              - { label: "Contenido (EN)", name: "body_en", widget: "text", required: false, hint: "Solo si el post no tiene página propia. Separa los párrafos con una línea en blanco." }

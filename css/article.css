@@ -8,7 +8,7 @@
    artículo se llama "semáforo del descanso".
    ============================================================ */
 
-.article-header{ padding:110px 0 0; }
+.article-header{ padding-top:110px; }   /* solo arriba: el padding lateral lo da .wrap */
 .breadcrumb{ font-size:13px; color:#8A8072; margin-bottom:20px; }
 .breadcrumb a{ color:#8A8072; border-bottom:1px solid transparent; }
 .breadcrumb a:hover{ color:var(--tinta); border-color:var(--tinta); }

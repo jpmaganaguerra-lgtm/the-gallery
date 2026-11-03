@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" class="no-js">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE GALLERY — Quédate en el centro de todo</title>
-<meta name="description" content="Una estancia de diseño en el corazón de la Condesa. Departamentos, un café en la planta baja, bicicletas y un barrio que de verdad se vive.">
+<title>THE GALLERY — Stay in the middle of everything</title>
+<meta name="description" content="A design-forward stay in the heart of Condesa. Apartments, a café downstairs, bikes, and a neighborhood you actually get to live in.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,14 +14,19 @@
 <body data-chapter="stay" data-home>
 
 <header class="site" id="siteHeader">
-  <button type="button" class="burger" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="siteMenu">
-    <span class="burger-box"><i></i><i></i></span>
-  </button>
+  <div class="hd-left">
+    <button type="button" class="burger" id="menuToggle" aria-label="Open menu" data-i18n-attr="aria-label:burger.open" aria-expanded="false" aria-controls="siteMenu">
+      <span class="burger-box"><i></i><i></i></span>
+    </button>
+    <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:lang.aria">
+      <button type="button" data-lang="en" aria-pressed="true">en</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="false">es</button>
+    </div>
+  </div>
   <a href="#top" class="logotype">
     <img src="assets/logo/logo-color-the-gallery.webp" alt="The Gallery" class="logo-img"
          onerror="this.outerHTML='The Gallery'">
   </a>
-  <a href="#book" class="cta-book" data-reserve><span>Reserva aquí</span></a>
+  <a href="#book" class="cta-book" data-reserve><span data-i18n="hdr.book">Book here</span></a>
 </header>
 
 <main id="top">
@@ -36,52 +41,52 @@
                   assets/img/hero/hero-courtyard-2400.webp 2400w"
           sizes="100vw" type="image/webp">
         <img id="heroPhoto" src="assets/img/hero/hero-courtyard-1600.webp"
-             alt="Patio interior de The Gallery, con bambú, bicicletas y mesas de café"
+             alt="The Gallery courtyard, with bamboo, bicycles and café tables" data-i18n-attr="alt:hero.alt"
              fetchpriority="high" decoding="async" loading="eager"
              style="background-image:url('data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JQBOgZYAg/y2mv9xq8lSAAP2MOz5Y1IgeFCCnGNHjs3s0jPhe+NFnmBixAZTeEgyeN8+3Rh5COIAwlAg2G0kFJoYnrU6HDAiiO+Lj1lTJxB3N/XAN780kMCVxP0B26GMn+gk8cAA='); background-size:cover; background-position:60% 50%;">
       </picture>
       <canvas id="heroReveal" aria-hidden="true"></canvas>
     </div>
     <div class="hero-inner wrap">
-      <h1 class="hero-title reveal">Quédate en el centro <span>de todo.</span></h1>
+      <h1 class="hero-title reveal" data-i18n-html="hero.h1">Stay in the middle <span>of everything.</span></h1>
     </div>
   </section>
 
   <!-- ================= A DAY AT THE GALLERY ================= -->
   <section id="day">
     <div class="wrap">
-      <div class="kicker reveal">01 — El día</div>
+      <div class="kicker reveal" data-i18n="day.kicker">01 — The day</div>
       <div class="section-head">
-        <h2 class="reveal">Un día en The Gallery.</h2>
-        <p class="reveal">No vendemos amenidades. Vendemos cómo se siente un día completo aquí, desde que abres los ojos hasta que vuelves a cerrarlos.</p>
+        <h2 class="reveal" data-i18n="day.h2">A day at The Gallery.</h2>
+        <p class="reveal" data-i18n="day.p">We don't sell amenities. We sell how a full day here feels, from the moment you open your eyes until you close them again.</p>
       </div>
       <div class="reveal">
         <div class="day-stage" id="dayStage">
           <div class="day-photo-wrap" id="dayPhotoWrap"></div>
           <div class="day-banner" id="dayBanner">
-            <div class="moment-title" id="momentTitle">Despierta</div>
-            <div class="moment-tag" id="momentTag">Luz natural entrando por ventanas altas. Sin alarmas.</div>
+            <div class="moment-title" id="momentTitle">Wake up</div>
+            <div class="moment-tag" id="momentTag">Natural light through tall windows. No alarms.</div>
           </div>
         </div>
-        <div class="day-rail" id="dayRail" role="tablist" aria-label="Momentos del día — pasa el cursor para cambiar"></div>
+        <div class="day-rail" id="dayRail" role="tablist" aria-label="Moments of the day — hover to switch" data-i18n-attr="aria-label:day.aria"></div>
       </div>
     </div>
   </section>
 
   <div class="loud-strip reveal">
     <div class="wrap">
-      <span class="display">Toma una bici. Piérdete.</span>
-      <span style="font-size:14px; font-weight:600;">Condesa se disfruta mejor en dos ruedas →</span>
+      <span class="display" data-i18n="strip1.big">Take a bike. Get lost.</span>
+      <span style="font-size:14px; font-weight:600;" data-i18n="strip1.small">Condesa is better on two wheels →</span>
     </div>
   </div>
 
   <!-- ================= STAY / ROOMS ================= -->
   <section id="stay">
     <div class="wrap">
-      <div class="kicker reveal">02 — Quédate</div>
+      <div class="kicker reveal" data-i18n="stay.kicker">02 — Stay</div>
       <div class="section-head">
-        <h2 class="reveal">Tres formas de quedarte.</h2>
-        <p class="reveal">Cada espacio está pensado para una estancia distinta, desde una escapada de fin de semana hasta vivir un mes en Condesa.</p>
+        <h2 class="reveal" data-i18n="stay.h2">Three ways to stay.</h2>
+        <p class="reveal" data-i18n="stay.p">Each space is designed for a different kind of stay, from a weekend escape to living a month in Condesa.</p>
       </div>
       <div class="room-tabs reveal" id="roomTabs" role="tablist"></div>
       <div class="room-grid reveal" id="roomContent"></div>
@@ -91,32 +96,32 @@
   <!-- ================= THE HOUSE ================= -->
   <section id="house">
     <div class="wrap">
-      <div class="kicker reveal">03 — Tu casa</div>
+      <div class="kicker reveal" data-i18n="house.kicker">03 — Your home</div>
       <div class="section-head">
-        <h2 class="reveal">Un delicioso café abajo y las bicis en la puerta. Las posibilidades sobran.</h2>
-        <p class="reveal">Lo que hace que The Gallery se sienta como casa y no como hospedaje.</p>
+        <h2 class="reveal" data-i18n="house.h2">Great coffee downstairs and bikes at the door. The possibilities are endless.</h2>
+        <p class="reveal" data-i18n="house.p">What makes The Gallery feel like home, not a hotel.</p>
       </div>
       <div class="house-grid reveal">
         <div class="house-card">
           <img class="house-photo" src="assets/img/house/cafe/cover.jpg" alt="" loading="lazy" decoding="async"
                onload="this.classList.add('loaded')" onerror="this.remove()">
-          <span class="tag">Café</span>
-          <h3>Café de autor, abierto a la calle</h3>
-          <p>Hay una excelente opción de café de autor en la recepción o bien solicita a nuestro personal una deliciosa taza de nuestro café recién hecho.</p>
+          <span class="tag" data-i18n="house.1.tag">Coffee</span>
+          <h3 data-i18n="house.1.h3">Specialty coffee, open to the street</h3>
+          <p data-i18n="house.1.p">There's an excellent specialty coffee option at the front desk, or ask our staff for a delicious cup of freshly brewed coffee.</p>
         </div>
         <div class="house-card">
           <img class="house-photo" src="assets/img/house/bikes/cover.jpg" alt="" loading="lazy" decoding="async"
                onload="this.classList.add('loaded')" onerror="this.remove()">
-          <span class="tag">Bicis</span>
-          <h3>Condesa se recorre mejor en dos ruedas</h3>
-          <p>Toma una bici al salir. Parque México a cinco minutos, Roma a diez, Chapultepec a quince.</p>
+          <span class="tag" data-i18n="house.2.tag">Bikes</span>
+          <h3 data-i18n="house.2.h3">Condesa is best explored on two wheels</h3>
+          <p data-i18n="house.2.p">Grab a bike on your way out. Parque México is five minutes away, Roma ten, Chapultepec fifteen.</p>
         </div>
         <div class="house-card">
           <img class="house-photo" src="assets/img/house/common/cover.jpg" alt="" loading="lazy" decoding="async"
                onload="this.classList.add('loaded')" onerror="this.remove()">
-          <span class="tag">Espacios comunes</span>
-          <h3>Un lugar para trabajar, no solo para dormir</h3>
-          <p>Mesas largas, buena luz, wifi que de verdad funciona.</p>
+          <span class="tag" data-i18n="house.3.tag">Common areas</span>
+          <h3 data-i18n="house.3.h3">A place to work, not just to sleep</h3>
+          <p data-i18n="house.3.p">Long tables, good light, Wi-Fi that actually works.</p>
         </div>
       </div>
     </div>
@@ -124,22 +129,22 @@
 
   <div class="loud-strip reveal" style="background:var(--nopal); color:var(--hueso);">
     <div class="wrap">
-      <span class="display">Café, luego existo.</span>
-      <span style="font-size:14px; font-weight:600;">Empieza el día con el pie derecho →</span>
+      <span class="display" data-i18n="strip2.big">Coffee, therefore I am.</span>
+      <span style="font-size:14px; font-weight:600;" data-i18n="strip2.small">Start the day on the right foot →</span>
     </div>
   </div>
 
   <!-- ================= LIVING CONDESA (blog) ================= -->
   <section id="condesa">
     <div class="wrap">
-      <div class="kicker reveal">04 — Viviendo La Condesa</div>
+      <div class="kicker reveal" data-i18n="lc.kicker">04 — Living Condesa</div>
       <div class="section-head">
-        <h2 class="reveal">El barrio contado por quien lo vive.</h2>
-        <p class="reveal">Historias cortas sobre Condesa, el arte que podrás encontrar en THE GALLERY, qué hacer, a donde ir, qué sí vale la pena, qué no vale la pena.</p>
+        <h2 class="reveal" data-i18n="lc.h2">The neighborhood, told by those who live it.</h2>
+        <p class="reveal" data-i18n="lc.p">Short stories about Condesa, the art you'll find at THE GALLERY, what to do, where to go, what's worth it and what isn't.</p>
       </div>
     </div>
 
-    <div class="marquee-wrap reveal" id="marqueeWrap" aria-label="Posts de Living Condesa">
+    <div class="marquee-wrap reveal" id="marqueeWrap" aria-label="Living Condesa posts" data-i18n-attr="aria-label:lc.aria">
       <div class="marquee-track" id="marqueeTrack"></div>
     </div>
   </section>
@@ -147,7 +152,7 @@
   <!-- Modal de lectura — se llena por JS al hacer clic en un post -->
   <div class="post-modal" id="postModal" aria-hidden="true">
     <div class="post-modal-inner">
-      <button class="post-modal-close" id="postModalClose" aria-label="Cerrar">✕</button>
+      <button class="post-modal-close" id="postModalClose" aria-label="Close" data-i18n-attr="aria-label:lc.close">✕</button>
       <div id="postModalBody"></div>
     </div>
   </div>
@@ -157,19 +162,19 @@
     <div class="wrap">
       <div class="book-section">
         <div class="wrap">
-          <div class="kicker reveal" style="color:var(--cempasuchil);">05 — Reserva</div>
-          <h2 class="reveal" style="font-size:clamp(32px,4vw,52px); max-width:16ch;">Reserva tu estancia en Condesa.</h2>
-          <p class="reveal" style="max-width:44ch; font-size:15px; opacity:.85;">A unos cuantos clics de tu siguiente aventura.</p>
+          <div class="kicker reveal" style="color:var(--cempasuchil);" data-i18n="book.kicker">05 — Book</div>
+          <h2 class="reveal" style="font-size:clamp(32px,4vw,52px); max-width:16ch;" data-i18n="book.h2">Book your stay in Condesa.</h2>
+          <p class="reveal" style="max-width:44ch; font-size:15px; opacity:.85;" data-i18n="book.p">A few clicks away from your next adventure.</p>
           <form class="book-form reveal" id="bookForm">
-            <div class="book-field"><label for="checkin">Llegada</label><input type="date" id="checkin" required></div>
-            <div class="book-field"><label for="checkout">Salida</label><input type="date" id="checkout" required></div>
-            <div class="book-field"><label for="guests">Huéspedes</label>
+            <div class="book-field"><label for="checkin" data-i18n="book.l1">Check-in</label><input type="date" id="checkin" required></div>
+            <div class="book-field"><label for="checkout" data-i18n="book.l2">Check-out</label><input type="date" id="checkout" required></div>
+            <div class="book-field"><label for="guests" data-i18n="book.l3">Guests</label>
               <select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
             </div>
             <!-- "Espacio" se quitó del formulario: el motor de Octorate no soporta
                  preseleccionar tipo de habitación por URL en este método — el
                  huésped elige entre los disponibles ya dentro del motor. -->
-            <button type="submit" class="book-submit">Ver disponibilidad</button>
+            <button type="submit" class="book-submit" data-i18n="book.btn">See availability</button>
           </form>
           <p id="bookNote" class="book-note" role="status"></p>
         </div>
@@ -183,21 +188,23 @@
   <div class="wrap foot-grid">
     <div>
       <div class="logotype" style="margin-bottom:8px;">The Gallery</div>
-      <p style="margin:0; max-width:28ch;">Francisco Márquez 149, Condesa, Ciudad de México.</p>
+      <p style="margin:0; max-width:28ch;" data-i18n="foot.addr">Francisco Márquez 149, Condesa, Mexico City.</p>
     </div>
     <div class="foot-cols">
       <div>
-        <strong style="font-size:12px; color:var(--tinta);">Explorar</strong>
-        <a href="#stay">Quédate</a><a href="#house">Tu casa lejos de casa</a><a href="#condesa">Viviendo La Condesa</a>
+        <strong style="font-size:12px; color:var(--tinta);" data-i18n="foot.explore">Explore</strong>
+        <a href="#stay" data-i18n="foot.stay">Stay</a><a href="#house" data-i18n="foot.house">Your home away from home</a><a href="#condesa" data-i18n="foot.condesa">Living Condesa</a>
       </div>
       <div>
-        <strong style="font-size:12px; color:var(--tinta);">Contacto</strong>
-        <a href="mailto:hola@thegallery.mx">hola@thegallery.mx</a><a href="#book" data-reserve>Reservar</a>
+        <strong style="font-size:12px; color:var(--tinta);" data-i18n="foot.contact">Contact</strong>
+        <a href="mailto:hola@thegallery.mx">hola@thegallery.mx</a><a href="#book" data-reserve data-i18n="foot.book">Book</a>
       </div>
     </div>
   </div>
 </footer>
 
+<script src="js/strings.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/header.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/hero-reveal.js" defer></script>
