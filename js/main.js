@@ -1,41 +1,55 @@
 
 const DAY_MOMENTS = [
-  { label:"Wake up", tag:"Luz natural entrando por ventanas altas. Sin alarmas.", chapter:"stay",
+  { label:"Despierta", tag:"Luz natural entrando por ventanas altas. Sin alarmas.", chapter:"stay",
     img:"assets/img/day/Wake-up-at-The-Gallery-Condesa.webp" },
-  { label:"Make coffee", tag:"Bajas al café. El barista ya sabe cómo te gusta.", chapter:"house",
+  { label:"Un cafecito", tag:"Bajas al café. El barista ya sabe cómo te gusta.", chapter:"house",
     img:"assets/img/day/Make-Coffee-at-The-Gallery-Condesa.webp" },
-  { label:"Go out", tag:"Tomas una bici. Parque México a cinco minutos.", chapter:"house",
+  { label:"Hora de salir", tag:"Tomas una bici. Parque México a cinco minutos.", chapter:"house",
     img:"assets/img/day/Get-Out-at-The-Gallery-Condesa.webp" },
-  { label:"Come back", tag:"Trabajas una hora en la mesa larga de la sala común.", chapter:"house",
+  { label:"Regresa", tag:"Trabajas una hora en la mesa larga de la sala común.", chapter:"house",
     img:"assets/img/day/Come-Back-to-The-Gallery-Condesa.webp" },
-  { label:"Have a drink", tag:"Mezcal en una terraza a la vuelta, antes de que anochezca.", chapter:"condesa",
+  { label:"¿Algo de tomar?", tag:"Mezcal en una terraza a la vuelta, antes de que anochezca.", chapter:"condesa",
     img:"assets/img/day/Have-a-drink-at-The-Gallery-Condesa.webp" },
-  { label:"Sleep", tag:"De vuelta al cuarto. Mañana se repite, distinto.", chapter:"stay",
+  { label:"Descansa", tag:"De vuelta al cuarto. Mañana se repite, distinto.", chapter:"stay",
     img:"assets/img/day/Sleep-at-The-Gallery-Condesa.webp" }
 ];
 
 const ROOMS = [
-  { id:"studio", name:"The Studio", tagline:"For slow mornings.", num:"01",
+  { id:"studio", name:"Estudio", tagline:"Para mañanas lentas.", num:"01",
     specs:[["32 m²","Superficie"],["2","Huéspedes"],["1","Cama king"]],
     desc:"Un solo espacio bien resuelto: cama, cocina compacta y una zona de estar que se convierte en escritorio.",
     art:"Sobre la cama, una pieza de ", artist:"Renata Off — técnica mixta, 2023.",
     bg:"var(--cempasuchil)",
-    images:["assets/img/stay/studio/cover.jpg","assets/img/stay/studio/2.jpg","assets/img/stay/studio/3.jpg","assets/img/stay/studio/4.jpg"] },
-  { id:"loft", name:"The Loft", tagline:"For staying a while.", num:"02",
+    images:["assets/img/stay/studio/cover","assets/img/stay/studio/2","assets/img/stay/studio/3","assets/img/stay/studio/4"] },
+  { id:"loft", name:"Loft", tagline:"Para quedarte más.", num:"02",
     specs:[["54 m²","Superficie"],["3","Huéspedes"],["Doble altura","Sala"]],
     desc:"Dos niveles, cocina completa y una sala con doble altura que recibe la luz de la tarde.",
     art:"En el descanso de la escalera, una serie fotográfica de ", artist:"Iker Vicente — plata en gelatina, 2022.",
     bg:"var(--nopal)",
-    images:["assets/img/stay/loft/cover.jpg","assets/img/stay/loft/2.jpg","assets/img/stay/loft/3.jpg","assets/img/stay/loft/4.jpg"] },
-  { id:"corner", name:"The Corner", tagline:"For the view.", num:"03",
+    images:["assets/img/stay/loft/cover","assets/img/stay/loft/2","assets/img/stay/loft/3","assets/img/stay/loft/4"] },
+  { id:"corner", name:"Esquinado", tagline:"Descubre la quietud.", num:"03",
     specs:[["40 m²","Superficie"],["2","Huéspedes"],["Esquina","Ventanas"]],
-    desc:"Ventanas en dos fachadas, justo sobre la esquina de Amsterdam.",
+    desc:"Ventanas en dos fachadas, justo en la esquina.",
     art:"Frente a la cama, un óleo de ", artist:"Constanza Rangel — óleo sobre lino, 2024.",
     bg:"var(--magenta)",
-    images:["assets/img/stay/corner/cover.jpg","assets/img/stay/corner/2.jpg","assets/img/stay/corner/3.jpg","assets/img/stay/corner/4.jpg"] }
+    images:["assets/img/stay/corner/cover","assets/img/stay/corner/2","assets/img/stay/corner/3","assets/img/stay/corner/4"] }
 ];
 
 function el(tag, attrs={}, html=""){ const e=document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); if(html) e.innerHTML=html; return e; }
+
+// Cada foto de la galería de Stay prueba .jpg primero; si no existe,
+// prueba .webp una sola vez antes de darse por vencida (y en ese caso
+// se quita a sí misma y a su punto de navegación).
+function handleRoomPhotoError(img, idx){
+  if(!img.dataset.triedAlt){
+    img.dataset.triedAlt = '1';
+    img.src = /\.jpg$/i.test(img.src) ? img.src.replace(/\.jpg$/i, '.webp') : img.src.replace(/\.webp$/i, '.jpg');
+  } else {
+    img.remove();
+    const d = document.querySelector(`.room-dots .dot[data-index="${idx}"]`);
+    if(d) d.remove();
+  }
+}
 
 const revealObserver = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); }); }, {threshold:.15});
 document.querySelectorAll('.reveal').forEach(e=>revealObserver.observe(e));
@@ -117,10 +131,10 @@ function renderRoom(i, animate){
   // Las fotos se apilan (crossfade), como en "A Day at The Gallery".
   // Si un archivo no existe todavía, onerror la quita a ella Y a su
   // punto — así los puntos siempre reflejan solo las fotos que sí cargaron.
-  const photosHtml = r.images.map((src, idx) => `
-    <img class="room-photo-item${idx===0?' active':''}" src="${src}" alt="${r.name}, The Gallery"
+  const photosHtml = r.images.map((base, idx) => `
+    <img class="room-photo-item${idx===0?' active':''}" src="${base}.jpg" alt="${r.name}, The Gallery"
          data-index="${idx}" loading="${idx===0?'eager':'lazy'}" decoding="async"
-         onerror="this.remove(); const d=document.querySelector('.room-dots .dot[data-index=\\'${idx}\\']'); if(d) d.remove();">
+         onerror="handleRoomPhotoError(this, ${idx})">
   `).join('');
   const dotsHtml = r.images.map((_, idx) => `
     <button class="dot${idx===0?' active':''}" data-index="${idx}" aria-label="Foto ${idx+1} de ${r.name}"></button>
@@ -142,7 +156,6 @@ function renderRoom(i, animate){
       <p class="room-tagline">${r.tagline}</p>
       <div class="room-specs">${r.specs.map(([v,l])=>`<div><strong>${v}</strong>${l}</div>`).join('')}</div>
       <p class="room-desc">${r.desc}</p>
-      <p class="room-art">${r.art}<em>${r.artist}</em></p>
       <span class="link-explore">Explorar espacio</span>
     </div>`;
 
