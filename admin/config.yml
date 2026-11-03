@@ -10,7 +10,7 @@ public_folder: "assets/img/blog"
 
 collections:
   - name: "living_condesa"
-    label: "Living Condesa — Blog"
+    label: "Viviendo La Condesa — Blog"
     files:
       - file: "content/posts.json"
         label: "Posts"
@@ -26,9 +26,12 @@ collections:
               - label: "Categoría"
                 name: "category"
                 widget: "select"
-                options: ["Guía", "Morning", "Nightlife", "Bikes", "Art", "Food", "Community"]
+                options: ["Guía", "Mañana", "Vida nocturna", "Bicis", "Arte", "Comida", "Comunidad"]
               - { label: "Fecha", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-              - { label: "Foto de portada", name: "cover", widget: "image" }
+              - label: "Foto de portada"
+                name: "cover"
+                widget: "image"
+                hint: "Esta misma foto es también el hero (la imagen grande de arriba) en la página del post, si tiene página propia. No hace falta subirla en ningún otro lado."
               - { label: "Extracto (se ve en la tarjeta)", name: "excerpt", widget: "text" }
               - label: "Página propia (SEO) — opcional"
                 name: "url"
