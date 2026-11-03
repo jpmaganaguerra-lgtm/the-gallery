@@ -62,7 +62,7 @@ const chapterObserver = new IntersectionObserver((entries)=>{
   entries.forEach(en=>{
     if(en.isIntersecting){
       document.body.setAttribute('data-chapter', en.target.id);
-      document.querySelectorAll('nav.chapters a').forEach(a=>a.classList.toggle('active', a.dataset.target===en.target.id));
+      document.querySelectorAll('.menu-link[data-target]').forEach(a=>a.classList.toggle('active', a.dataset.target===en.target.id));
     }
   });
 }, {threshold:.4});
@@ -182,8 +182,10 @@ renderRoom(0,false);
    para integraciones con diseño propio.
    ============================================================ */
 (function () {
-  var OCTORATE_SITE_KEY = 'octosite362352'; // del <script data-sitekey="..."> que dio Octorate
-  var OCTORATE_LANG = 'es';
+  // La key vive en js/header.js (window.GALLERY_CONFIG); aquí queda de respaldo.
+  var CFG = window.GALLERY_CONFIG || { octorateSiteKey: 'octosite362352', octorateLang: 'es' };
+  var OCTORATE_SITE_KEY = CFG.octorateSiteKey;
+  var OCTORATE_LANG = CFG.octorateLang;
 
   var form = document.getElementById('bookForm');
   var note = document.getElementById('bookNote');
@@ -197,7 +199,8 @@ renderRoom(0,false);
   // guía de integración, para no dejar que el visitante llegue a su
   // motor con un rango de fechas inválido.
   var today = new Date();
-  var todayIso = today.toISOString().split('T')[0];
+  // Fecha LOCAL (toISOString usa UTC y dejaba "hoy" bloqueado por las tardes)
+  var todayIso = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
   checkinEl.setAttribute('min', todayIso);
   checkoutEl.setAttribute('min', todayIso);
 
